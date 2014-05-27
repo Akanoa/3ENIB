@@ -55,12 +55,12 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'database',
-			'username'  => 'root',
-			'password'  => '',
+			'database'  => '3ENIB',
+			'username'  => '3enib_admin',
+			'password'  => $_ENV['MySQL_passwd'],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
+			'prefix'    => '3enib',
 		),
 
 		'pgsql' => array(
