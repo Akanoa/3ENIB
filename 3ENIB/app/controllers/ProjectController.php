@@ -1,6 +1,6 @@
 <?php
 
-class StudentController extends BaseController {
+class ProjectController extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,8 +9,8 @@ class StudentController extends BaseController {
 	 */
 	public function index()
 	{
-		//
-		echo "Voici les étudiants";
+		$projects = Company::all();
+		return View::make("project.index")->with('projects', $projects);
 	}
 
 
@@ -22,7 +22,6 @@ class StudentController extends BaseController {
 	public function create()
 	{
 		//
-		echo "creation d'un étudiant";
 	}
 
 
@@ -46,7 +45,6 @@ class StudentController extends BaseController {
 	public function show($id)
 	{
 		//
-		echo "Voici l'étudiant n°".$id;
 	}
 
 

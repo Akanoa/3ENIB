@@ -60,7 +60,7 @@ return array(
 			'password'  => $_ENV['MySQL_passwd'],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '3enib',
+			'prefix'    => '3enib_',
 		),
 
 		'pgsql' => array(

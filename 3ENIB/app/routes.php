@@ -10,7 +10,5 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
-
- Route::get('/', array('uses' => 'HomeController@showWelcome'));
- Route::resource('student', 'StudentController');
+Route::get('/', array('uses' => 'HomeController@showWelcome'));
+Route::resource('project', 'ProjectController');
