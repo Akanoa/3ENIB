@@ -1,9 +1,9 @@
 <?php
 
-class Company extends Eloquent {
-	protected $table = "companies";
+class Student extends \Eloquent {
 
 	public function users(){
 		return $this->morphMany('User', 'own');
 	}
+
 }

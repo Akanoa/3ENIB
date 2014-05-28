@@ -1,6 +1,6 @@
 <?php
 
-class ProjectController extends BaseController {
+class CompanyController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +9,11 @@ class ProjectController extends BaseController {
 	 */
 	public function index()
 	{
-
+		$companies = Company::all();
+		$headerTitle = "Entreprises";
+		return View::make("company.list")
+			->with('companies', $companies)
+			->with('headerTitle', $headerTitle);
 	}
 
 
@@ -43,7 +47,11 @@ class ProjectController extends BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$company = Company::find($id);
+		$headerTitle = "Entreprises | ".$company->name;
+		return View::make("company.show")
+			->with('company', $company)
+			->with('headerTitle', $headerTitle);
 	}
 
 

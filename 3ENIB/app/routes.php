@@ -11,4 +11,6 @@
 |
 */
 Route::get('/', array('uses' => 'HomeController@showWelcome'));
-Route::resource('project', 'ProjectController');
+Route::resource('company', 'CompanyController');
+
+Route::controller('user', 'UserController');
