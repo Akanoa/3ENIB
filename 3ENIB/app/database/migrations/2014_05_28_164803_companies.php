@@ -17,7 +17,6 @@ class Companies extends Migration {
 			$table->string("name");
 			$table->text("description");
 			$table->string("photo_filepath");
-			$table->string("adress");
 			$table->text("contact");
 			$table->string("expertise");
 			$table->string("phone_number");

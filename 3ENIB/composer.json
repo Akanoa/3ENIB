@@ -5,7 +5,9 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
-		 "doctrine/dbal": "~2.3"
+		 "doctrine/dbal": "~2.3",
+		 "caouecs/laravel4-lang": "dev-master",
+		 "cviebrock/image-validator": "1.0.*"
 	},
 	"require-dev": {
 		"way/generators": "2.*"

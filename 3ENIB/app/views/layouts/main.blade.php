@@ -55,7 +55,7 @@
                             </ul>
                         </li>
                     @else
-                        <li><a href="{{URL::to('company')}}">Se connecter</a></li>
+                        <li><a href="{{URL::to('user/signin')}}">Se connecter</a></li>
                         <li><a href="{{URL::to('user/signup')}}">S'inscrire</a></li>
                     @endif
                 </ul>
@@ -69,4 +69,6 @@
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     {{HTML::script("js/bootstrap.min.js")}}
+    {{HTML::script("js/signup.js")}}
+    {{HTML::script("js/filestyle.js")}}
 </html>

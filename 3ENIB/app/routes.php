@@ -14,3 +14,4 @@ Route::get('/', array('uses' => 'HomeController@showWelcome'));
 Route::resource('company', 'CompanyController');
 
 Route::controller('user', 'UserController');
+// Route::controller('password', 'RemindersController');

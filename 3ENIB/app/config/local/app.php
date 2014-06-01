@@ -16,5 +16,4 @@ return array(
 	'debug' => true,
 
 	'locale' => 'fr',
-
 );
