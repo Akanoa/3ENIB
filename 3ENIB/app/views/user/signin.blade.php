@@ -2,6 +2,8 @@
 
 @section("content")
 
+
+
 {{Form::open(["method"=>"post", "url"=>"user/signin", 'class'=>'form-horizontal form-signin', 'id'=>'form-signin'])}}
 
   <!-- Text input-->

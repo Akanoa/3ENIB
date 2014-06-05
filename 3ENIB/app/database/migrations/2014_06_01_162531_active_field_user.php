@@ -13,7 +13,7 @@ class ActiveFieldUser extends Migration {
 	public function up()
 	{
 		Schema::table("users", function($table){
-			$table->integer("active")->default(0);
+			$table->integer("active")->default(1);
 		});
 	}
 

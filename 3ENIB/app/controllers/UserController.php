@@ -60,6 +60,10 @@ class UserController extends BaseController
 			else
 			{
 				$speciality = "";
+				//generate hash verification mail
+				$hash = md5(strval(time()));
+
+
 				if(Input::get("specialities") != null)
 				{
 					$speciality = implode(", ", Input::get("specialities"));
@@ -80,6 +84,7 @@ class UserController extends BaseController
 						"password"=> Hash::make(Input::get("password")),
 						"own_type"=> Input::get("subscription_type"),
 						"own_id"=>$id_student,
+						"hash_verification"=>$hash,
 						"created_at"=>date("Y-m-d H:i:s"),
 						"updated_at"=>date("Y-m-d H:i:s")
 					);
@@ -89,8 +94,8 @@ class UserController extends BaseController
 				if(Input::hasFile("avatar"))
 				{
 					$avatar = Input::file("avatar");
-					$filepath = storage_path()."/uploads/".$user_id."/avatar/".md5($avatar->getClientOriginalName());
-					$avatar->move($filepath);
+					$filepath = "/uploads/".$user_id."/avatar/".md5($avatar->getClientOriginalName());
+					$avatar->move(storage_path()."/uploads/".$user_id."/avatar/", md5($avatar->getClientOriginalName()));
 					$student = User::find($user_id)->own;
 					$student->photo_filepath = $filepath;
 					$student->save();
@@ -99,15 +104,32 @@ class UserController extends BaseController
 				if(Input::hasFile("cv"))
 				{
 					$cv = Input::file("cv");
-					$filepath = storage_path()."/uploads/".$user_id."/cv/".md5($avatar->getClientOriginalName());
-					$cv->move(storage_path()."/uploads/".$user_id."/cv/", md5($avatar->getClientOriginalName()));
+					$filepath = "/uploads/".$user_id."/cv/".md5($cv->getClientOriginalName());
+					$cv->move(storage_path()."/uploads/".$user_id."/cv/", md5($cv->getClientOriginalName()));
 					$student = User::find($user_id)->own;
-					$student->photo_filepath = $filepath;
+					$student->cv_filepath = $filepath;
 					$student->save();
 				}
 
+				$data = [
+						"id"=>$user_id,
+						"lastname"=>Input::get("lastname"),
+						"firstname"=>Input::get("firstname"),
+						"hash"=>$hash
+						];
+
+				Mail::send("emails.account.verification_student", $data, function($message){
+						$message->from("subscription@3enib.fr");
+						$message->to("y0guern@enib.fr")->subject("Vérification email 3ENIB");
+					});
+
 
 			}
+		}
+
+		else if(Input::get("subscription_type")=="company")
+		{
+
 		}
 
 	}
@@ -145,12 +167,90 @@ class UserController extends BaseController
 			}
 			else
 			{
+				$valid = true;
+				$errors_ = [];
+				$credentials = ['email' => Input::get("email"), 'password' => Input::get("password")];
 
-				if (Auth::attempt(['email' => Input::get("email"), 'password' => Input::get("password"), 'active' => 1], false, false))
+				if (Auth::validate($credentials))
 				{
-				    $user = User::where("email", "=", Input::get("email"))->first();
-				    var_dump($user->hash_verification);
+					$user = User::where("email", "=", $credentials["email"])->first();
+					if($user->hash_verification!=''){
+						array_push($errors_, "Vous n'avez pas encore confirmé votre email, vérifiez votre boîte mail");
+						$valid = false;
+					}
+					if($user->active!=1){
+						array_push($errors_, "Ce compte n'est pas actif, il a soit été banni soit désactivé momentanément");
+						$valid = false;
+					}
 				}
+				else
+				{
+					$valid = false;
+					array_push($errors_, "Le couple mot de passe/email ne correspond pas");
+				}
+
+				if($valid)
+				{
+					Auth::attempt($credentials, true, true);
+					return Redirect::to("/");
+				}
+				else
+				{
+					return Redirect::to("user/signin")
+					->with("notifications_errors",$errors_)
+					->with("headerTitle","Connection error")
+					->withInput();
+				}
+
 			}
+	}
+
+	/**
+	 * handle log out an existing user.
+	 *
+	 * @return Response
+	 */
+	public function getSignout()
+	{
+		if(Auth::check())
+		{
+			Auth::logout();
+		}
+		return Redirect::to("/");
+	}
+
+	/**
+	 * verification of email's user.
+	 *
+	 * @return Response
+	 */
+	public function getVerification($id, $hash)
+	{
+		try 
+		{
+			$user = User::find($id);
+			if($user->hash_verification == $hash)
+			{
+				$user->hash_verification = "";
+				$user->save();
+				return Redirect::to("user/signin")
+					->with('notifications_success', ["Votre mail est désormais validé, vous pouvez vous connecter."]);
+			}
+			else if($user->hash_verification == "")
+			{
+				return Redirect::to("user/signin")
+					->with('notifications_infos', ["Ce mail a déjà été validé, vous pouvez vous connecter."]);
+			}
+			else
+			{
+				return Redirect::to("user/signin")
+					->with('notifications_errors', ["Ce mail n'existe pas."]);
+			}
+		} 
+		catch (Exception $e) 
+		{
+			return Redirect::to("user/signin")
+				->with('notifications_errors', ["L'utilisateur n'existe pas."]);
+		}
 	}
 }
