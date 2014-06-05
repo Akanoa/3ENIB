@@ -97,7 +97,7 @@ class UserController extends BaseController
 					$filepath = "/uploads/".$user_id."/avatar/".md5($avatar->getClientOriginalName());
 					$avatar->move(storage_path()."/uploads/".$user_id."/avatar/", md5($avatar->getClientOriginalName()));
 					$student = User::find($user_id)->own;
-					$student->photo_filepath = $filepath;
+					$student->avatar_filepath = $filepath;
 					$student->save();
 				}
 
@@ -120,7 +120,7 @@ class UserController extends BaseController
 
 				Mail::send("emails.account.verification_student", $data, function($message){
 						$message->from("subscription@3enib.fr");
-						$message->to("y0guern@enib.fr")->subject("Vérification email 3ENIB");
+						$message->to(Input::get("email"))->subject("Vérification email 3ENIB");
 					});
 
 
@@ -129,7 +129,83 @@ class UserController extends BaseController
 
 		else if(Input::get("subscription_type")=="company")
 		{
+			$rules = array(
+					"name"=>"required|between:2,20",
+					"email"=>"required|email|unique:users|enib_email",
+					"avatar"=>"image|mimes:jpeg,bmp,png",
+					"image"=>"image|mimes:jpeg,bmp,png",
+					"password"=>"required|min:5|confirmed",
+					"password_confirmation"=>"required",
+					"contact"=>"required",
+					"siret"=>"required"
+				);
 
+			$validation = Validator::make(Input::all(), $rules);
+
+			if($validation->fails()){
+				return Redirect::to("user/signup")
+					->withErrors($validation)
+					->withInput();
+			}
+			else
+			{
+				//generate hash verification mail
+				$hash = md5(strval(time()));
+
+				$data_company = array(
+						"name"=>Input::get("name"),
+						"siret"=>Input::get("siret"),
+						"phone_number"=>Input::get("phone_number"),
+						"contact"=>Input::get("contact"),
+						"expertise"=>Input::get("expertise"),
+						"description"=>Input::get("description"),
+						"speciality"=>$speciality
+					);
+
+				$id_company = DB::table('companies')->insertGetId($data_company);
+
+				$data_user = array(
+						"email"=> Input::get("email"),
+						"password"=> Hash::make(Input::get("password")),
+						"own_type"=> Input::get("subscription_type"),
+						"own_id"=>$id_company,
+						"hash_verification"=>$hash,
+						"created_at"=>date("Y-m-d H:i:s"),
+						"updated_at"=>date("Y-m-d H:i:s")
+					);
+
+				$user_id = DB::table('users')->insertGetId($data_user);
+
+				if(Input::hasFile("avatar"))
+				{
+					$avatar = Input::file("avatar");
+					$filepath = "/uploads/".$user_id."/avatar/".md5($avatar->getClientOriginalName());
+					$avatar->move(storage_path()."/uploads/".$user_id."/avatar/", md5($avatar->getClientOriginalName()));
+					$student = User::find($user_id)->own;
+					$student->avatar_filepath = $filepath;
+					$student->save();
+				}
+
+				if(Input::hasFile("logo"))
+				{
+					$logo = Input::file("logo");
+					$filepath = "/uploads/".$user_id."/logo/".md5($logo->getClientOriginalName());
+					$logo->move(storage_path()."/uploads/".$user_id."/logo/", md5($logo->getClientOriginalName()));
+					$company = User::find($user_id)->own;
+					$company->photo_filepath = $filepath;
+					$company->save();
+				}
+
+				$data = [
+						"id"=>$user_id,
+						"hash"=>$hash
+						];
+
+				Mail::send("emails.account.verification_company", $data, function($message){
+						$message->from("subscription@3enib.fr");
+						$message->to(Input::get("email"))->subject("Vérification email 3ENIB");
+					});
+			}
 		}
 
 	}

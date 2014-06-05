@@ -204,6 +204,15 @@
 
   <!-- Avatar -->
   <div class="form-group">
+    <label class="col-md-4 control-label" for="avatar">Avatar</label>  
+    <div class="col-md-4">
+    {{Form::file("avatar", ["class"=>"filestyle", "data-buttonText"=>"Choississez votre avatar", "data-iconName"=>"glyphicon-inbox"])}}
+    </div>
+      {{$errors->first("avatar", '<span class="help-block">:message</span>')}}
+  </div>
+
+  <!-- Avatar -->
+  <div class="form-group">
     <label class="col-md-4 control-label" for="logo" >Image/Logo de votre entreprise</label>  
     <div class="col-md-4">
     {{Form::file("logo", ["class"=>"filestyle", "data-buttonText"=>"Image de présentation", "data-iconName"=>"glyphicon-inbox"])}}
@@ -213,7 +222,7 @@
 
   <!-- Textarea -->
   <div class="form-group">
-    <label class="col-md-4 control-label" for="description">Adresse de contact</label>
+    <label class="col-md-4 control-label" for="contact">Adresse de contact</label>
     <div class="col-md-4">
       {{ Form::textarea('contact',null, ['placeholder'=>"Où vous contacter", "rows"=>3,'class' => 'form-control']) }}
     </div>

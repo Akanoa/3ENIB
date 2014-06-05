@@ -40,7 +40,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if(!Auth::guest())
                         <li>
-                            <img class="navbar-brand img-circle" src="{{asset(Auth::user()->own->photo_filepath)}}" alt="">
+                            <img class="navbar-brand img-circle" src="{{asset(Auth::user()->own->avatar_filepath)}}" alt="">
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Espace Utilisateur<b class="caret"></b></a>
@@ -51,7 +51,7 @@
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Nav header</li>
                                 <li><a href="#">Separated link</a></li>
-                                <li><a href="user/signout">Se Deconnecter</a></li>
+                                <li><a href="{{URL::to('user/signout')}}">Se Deconnecter</a></li>
                             </ul>
                         </li>
                     @else
