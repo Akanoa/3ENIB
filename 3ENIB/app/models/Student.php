@@ -6,4 +6,8 @@ class Student extends \Eloquent {
 		return $this->morphMany('User', 'own');
 	}
 
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 }

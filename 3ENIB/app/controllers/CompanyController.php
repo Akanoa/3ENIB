@@ -48,10 +48,10 @@ class CompanyController extends \BaseController {
 	public function show($id)
 	{
 		$company = Company::find($id);
+		$projects = $company->projects();
 		$headerTitle = "Entreprises | ".$company->name;
-		return View::make("company.show")
-			->with('company', $company)
-			->with('headerTitle', $headerTitle);
+		Session::set('headerTitle', $headerTitle);
+		return View::make("company.show", compact("company", "projects"));
 	}
 
 

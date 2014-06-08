@@ -8,13 +8,13 @@
         <meta name="author" content="">
         <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-        <title>3ENIB | {{isset($headerTitle)?$headerTitle:""}}</title>
+        <title>3ENIB | {{Session::get("headerTitle", "")}}</title>
 
         <!-- Bootstrap core CSS -->
         {{HTML::style("css/bootstrap.min.css")}}
 
         <!-- Bootstrap theme CSS -->
-        {{HTML::style("css/bootstrap-theme.min.css")}}
+        <!--{{HTML::style("css/bootstrap-theme.min.css")}}-->
         
         <!-- Mine custom style -->
         {{HTML::style("css/3ENIB.css")}}
@@ -32,7 +32,7 @@
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{{URL::to('/')}}">Home</a></li>
+                    <li class="active"><a href="{{URL::to('/')}}">Accueil</a></li>
                     <li><a href="{{URL::to('company')}}">Entreprises</a></li>
                     <li><a href="{{URL::to('project')}}">Projets</a></li>
                     <li><a href="#contact">Étudiants</a></li>
@@ -40,17 +40,18 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if(!Auth::guest())
                         <li>
-                            <img class="navbar-brand img-circle" src="{{asset(Auth::user()->own->avatar_filepath)}}" alt="">
+                            <img class="navbar-brand img-circle" src="{{$_ENV['root_site']}}/document/avatar/{{Auth::user()->own->avatar_filepath}}" alt="">
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Espace Utilisateur<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
+                                @if(Auth::user()->own_type == "company")
+                                    <li><a href="{{URL::to('company')}}/{{Auth::user()->own->id}}">Accéder à mon entreprise</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                @endif
                                 <li class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
+                                <li class="dropdown-header">Mon profil</li>
+                                <li><a href="{{URL::to('user/edit')}}">Editer mon profil</a></li>
                                 <li><a href="{{URL::to('user/signout')}}">Se Deconnecter</a></li>
                             </ul>
                         </li>
@@ -67,6 +68,7 @@
 
         @if (Session::get("notifications_errors"))
             <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 @foreach (Session::get("notifications_errors") as $e)
                     <p>{{$e}}</p>
                 @endforeach
@@ -77,6 +79,7 @@
 
         @if (Session::get("notifications_infos"))
           <div class="alert alert-info alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             @foreach (Session::get("notifications_infos") as $e)
               <p>{{$e}}</p>
             @endforeach
@@ -86,6 +89,7 @@
 
         @if (Session::get("notifications_success"))
           <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             @foreach (Session::get("notifications_success") as $e)
               <p>{{$e}}</p>
             @endforeach

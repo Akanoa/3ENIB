@@ -5,7 +5,7 @@ class UserController extends BaseController
 
 	public function __construct()
 	{
-		$this->beforeFilter('auth', array('only' => array('signup', 'signout')));
+		$this->beforeFilter('auth', array('only' => array('signout', 'edit')));
 		$this->beforeFilter('csrf', array('on' => 'post'));
 	}
 
@@ -22,9 +22,9 @@ class UserController extends BaseController
 			"Informatique",
 			"Électronique"
 		];
-		$headerTitle = "S'inscrire";
+		Session::set("headerTitle", "S'inscrire");
 
-		return View::make("user.signup", compact(["headerTitle", "studentSpecialities"]));
+		return View::make("user.signup", compact("studentSpecialities"));
 	}
 
 	/**
@@ -34,14 +34,18 @@ class UserController extends BaseController
 	 */
 	public function postSignup()
 	{
-		if(Auth::check()){return Redirect::to("/");}
+		if(Auth::check())
+		{
+			Session::set("headerTitle", "Acceuil");
+			return Redirect::to("/");
+		}
 
 
 		if(Input::get("subscription_type")=="student")
 		{
 
 			$rules = array(
-					"firstname"=>"required|between:2,20",
+					"firstname"=>"required|between:2,50",
 					"lastname"=>"required|between:2,20",
 					"email"=>"required|email|unique:users|enib_email",
 					"avatar"=>"image|mimes:jpeg,bmp,png",
@@ -53,6 +57,7 @@ class UserController extends BaseController
 			$validation = Validator::make(Input::all(), $rules);
 
 			if($validation->fails()){
+				Session::set("headerTitle", "Se connecter");
 				return Redirect::to("user/signup")
 					->withErrors($validation)
 					->withInput();
@@ -91,23 +96,27 @@ class UserController extends BaseController
 
 				$user_id = DB::table('users')->insertGetId($data_user);
 
+				Student::where("id", "=", $id_student)->update(["user_id"=>$user_id]);
+
 				if(Input::hasFile("avatar"))
 				{
 					$avatar = Input::file("avatar");
-					$filepath = "/uploads/".$user_id."/avatar/".md5($avatar->getClientOriginalName());
+					$hash_avatar = md5($avatar->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/avatar/".$hash_avatar;
 					$avatar->move(storage_path()."/uploads/".$user_id."/avatar/", md5($avatar->getClientOriginalName()));
 					$student = User::find($user_id)->own;
-					$student->avatar_filepath = $filepath;
+					$student->avatar_filepath = $hash_avatar;
 					$student->save();
 				}
 
 				if(Input::hasFile("cv"))
 				{
 					$cv = Input::file("cv");
-					$filepath = "/uploads/".$user_id."/cv/".md5($cv->getClientOriginalName());
+					$hash_cv = md5($cv->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/cv/".$hash_cv;
 					$cv->move(storage_path()."/uploads/".$user_id."/cv/", md5($cv->getClientOriginalName()));
 					$student = User::find($user_id)->own;
-					$student->cv_filepath = $filepath;
+					$student->cv_filepath = $hash_cv;
 					$student->save();
 				}
 
@@ -130,8 +139,8 @@ class UserController extends BaseController
 		else if(Input::get("subscription_type")=="company")
 		{
 			$rules = array(
-					"name"=>"required|between:2,20",
-					"email"=>"required|email|unique:users|enib_email",
+					"name"=>"required|between:2,50",
+					"email"=>"required|email|unique:users",
 					"avatar"=>"image|mimes:jpeg,bmp,png",
 					"image"=>"image|mimes:jpeg,bmp,png",
 					"password"=>"required|min:5|confirmed",
@@ -159,7 +168,6 @@ class UserController extends BaseController
 						"contact"=>Input::get("contact"),
 						"expertise"=>Input::get("expertise"),
 						"description"=>Input::get("description"),
-						"speciality"=>$speciality
 					);
 
 				$id_company = DB::table('companies')->insertGetId($data_company);
@@ -176,23 +184,27 @@ class UserController extends BaseController
 
 				$user_id = DB::table('users')->insertGetId($data_user);
 
+				Company::where("id", "=", $id_company)->update(["user_id"=>$user_id]);
+
 				if(Input::hasFile("avatar"))
 				{
 					$avatar = Input::file("avatar");
-					$filepath = "/uploads/".$user_id."/avatar/".md5($avatar->getClientOriginalName());
+					$hash_avatar = md5($avatar->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/avatar/".$hash_avatar;
 					$avatar->move(storage_path()."/uploads/".$user_id."/avatar/", md5($avatar->getClientOriginalName()));
 					$student = User::find($user_id)->own;
-					$student->avatar_filepath = $filepath;
+					$student->avatar_filepath = $hash_avatar;
 					$student->save();
 				}
 
 				if(Input::hasFile("logo"))
 				{
 					$logo = Input::file("logo");
-					$filepath = "/uploads/".$user_id."/logo/".md5($logo->getClientOriginalName());
+					$hash_logo = md5($logo->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/logo/".$hash_logo;
 					$logo->move(storage_path()."/uploads/".$user_id."/logo/", md5($logo->getClientOriginalName()));
 					$company = User::find($user_id)->own;
-					$company->photo_filepath = $filepath;
+					$company->photo_filepath = $hash_logo;
 					$company->save();
 				}
 
@@ -217,8 +229,16 @@ class UserController extends BaseController
 	 */
 	public function getSignin()
 	{
-		$headerTitle = "Connection";
-		return View::make("user.signin", compact("headerTitle"));
+		if(Auth::check())
+		{
+			Session::set("headerTitle", "Accueil");
+			$infos = ["Vous êtes déjà connecté"];
+			return Redirect::to("/")
+				->with("notifications_infos", $infos);
+
+		}
+		Session::set("headerTitle", "Se connecter");
+		return View::make("user.signin");
 	}
 
 	/**
@@ -237,6 +257,7 @@ class UserController extends BaseController
 			$validation = Validator::make(Input::all(), $rules);
 
 			if($validation->fails()){
+				Session::set("headerTitle", "Se connecter");
 				return Redirect::to("user/signin")
 					->withErrors($validation)
 					->withInput();
@@ -268,13 +289,18 @@ class UserController extends BaseController
 				if($valid)
 				{
 					Auth::attempt($credentials, true, true);
-					return Redirect::to("/");
+					Session::set("headerTitle", "Acceuil");
+
+					$infos = ["Vous êtes maintenant connecté"];
+
+					return Redirect::to("/")
+						->with("notifications_success", $infos);
 				}
 				else
 				{
+					Session::set("headerTitle", "Se connecter");
 					return Redirect::to("user/signin")
 					->with("notifications_errors",$errors_)
-					->with("headerTitle","Connection error")
 					->withInput();
 				}
 
@@ -292,7 +318,10 @@ class UserController extends BaseController
 		{
 			Auth::logout();
 		}
-		return Redirect::to("/");
+		Session::set("headerTitle", "Se connecter");
+		$infos = ["Vous êtes maintenant déconnecté"];
+		return Redirect::to("/")
+			->with("notifications_infos", $infos);
 	}
 
 	/**
@@ -328,5 +357,234 @@ class UserController extends BaseController
 			return Redirect::to("user/signin")
 				->with('notifications_errors', ["L'utilisateur n'existe pas."]);
 		}
+	}
+
+	/**
+	 * edition an existing user.
+	 *
+	 * @return Response
+	 */
+	 public function getEdit()
+	 {
+	 	if(Auth::check())
+	 	{
+			Session::set("headerTitle", "Edition");
+			$type = Auth::user()->own_type;
+
+			if($type == "student")
+			{
+				$studentSpecialities = [
+					"Mecatronique",
+					"Informatique",
+					"Électronique"
+				];
+
+				$user = Auth::user();
+
+				$datas = [
+					"lastname" => $user->own->lastname,
+					"firstname" => $user->own->firstname,
+					"email" => $user->email,
+					"phone_number" => $user->own->phone_number,
+					"description" => $user->own->description
+				];
+
+				return View::make("user.edit", compact("type", "studentSpecialities", "datas"));
+				
+			}
+			else if($type == "company")
+			{
+				$user = Auth::user();
+
+				$datas = [
+					"name" => $user->own->name,
+					"siret" => $user->own->SIRET,
+					"email" => $user->email,
+					"phone_number" => $user->own->phone_number,
+					"description" => $user->own->description,
+					"expertise" => $user->own->expertise,
+					"contact" => $user->own->contact
+				];
+
+				return View::make("user.edit", compact("type", "studentSpecialities", "datas"));
+			}
+	 	}
+	 	else
+	 	{
+	 		Session::set("headerTitle", "Accueil");
+			return Redirect::to("/");
+	 	}
+	 }
+
+	/**
+	* edition an existing user.
+	*
+	* @return Response
+	*/
+	public function postEdit()
+	{
+		if(!Auth::check())
+		{
+			Session::set("headerTitle", "Accueil");
+			return Redirect::to("/");
+		}
+
+		if(Input::get("subscription_type")=="student")
+		{
+
+			$rules = array(
+					"firstname"=>"between:2,50",
+					"lastname"=>"between:2,20",
+					"email"=>"email|enib_email",
+					"avatar"=>"image|mimes:jpeg,bmp,png",
+					"cv"=>"mimes:pdf",
+					"password"=>"min:5|confirmed",
+				);
+
+			$validation = Validator::make(Input::all(), $rules);
+
+			if($validation->fails())
+			{
+				Session::set("headerTitle", "Se connecter");
+				return Redirect::to("user/edit")
+					->withErrors($validation)
+					->withInput();
+			}
+			else
+			{
+				$speciality = "";
+				//generate hash verification mail
+				$hash = md5(strval(time()));
+
+
+				if(Input::get("specialities") != null)
+				{
+					$speciality = implode(", ", Input::get("specialities"));
+				}
+
+				$data_student = array(
+						"lastname"=>Input::get("lastname"),
+						"firstname"=>Input::get("firstname"),
+						"phone_number"=>Input::get("phone_number"),
+						"description"=>Input::get("description"),
+					);
+
+				if($speciality != "")
+				{
+					$data_student["speciality"] = $speciality;
+				}
+
+				$user_id = Auth::user()->id;
+
+				Student::where("id", '=', Auth::user()->own->id)->update($data_student);
+
+				$data_user = array(
+						"email"=> Input::get("email"),
+					);
+
+				if(Input::get("password"))
+				{
+					$data_user["password"] = Input::get("password");
+				}
+
+				User::where("id",'=',$user_id)->update($data_user);
+
+				if(Input::hasFile("avatar"))
+				{
+					$avatar = Input::file("avatar");
+					$hash_avatar = md5($avatar->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/avatar/".$hash_avatar;
+					$avatar->move(storage_path()."/uploads/".$user_id."/avatar/", md5($avatar->getClientOriginalName()));
+					$student = User::find($user_id)->own;
+					$student->avatar_filepath = $hash_avatar;
+					$student->save();
+				}
+
+				if(Input::hasFile("cv"))
+				{
+					$cv = Input::file("cv");
+					$hash_cv = md5($cv->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/cv/".$hash_cv;
+					$cv->move(storage_path()."/uploads/".$user_id."/cv/", md5($cv->getClientOriginalName()));
+					$student = User::find($user_id)->own;
+					$student->cv_filepath = $hash_cv;
+					$student->save();
+				}
+			}
+		}
+
+		else if(Input::get("subscription_type")=="company")
+		{
+			$rules = array(
+					"name"=>"between:2,50",
+					"email"=>"email",
+					"avatar"=>"image|mimes:jpeg,bmp,png",
+					"image"=>"image|mimes:jpeg,bmp,png",
+					"password"=>"min:5|confirmed",
+				);
+
+			$validation = Validator::make(Input::all(), $rules);
+
+			if($validation->fails())
+			{
+				return Redirect::to("user/edit")
+					->withErrors($validation)
+					->withInput();
+			}
+			else
+			{
+
+				$data_company = array(
+						"name"=>Input::get("name"),
+						"siret"=>Input::get("siret"),
+						"phone_number"=>Input::get("phone_number"),
+						"contact"=>Input::get("contact"),
+						"expertise"=>Input::get("expertise"),
+						"description"=>Input::get("description"),
+					);
+
+				$user_id = Auth::user()->id;
+
+				Company::where("id", '=', Auth::user()->own->id)->update($data_company);
+
+				$data_user = array(
+						"email"=> Input::get("email"),
+					);
+				if(Input::get("password"))
+				{
+					$data_user["password"] = Input::get("password");
+				}
+
+				User::where("id",'=',$user_id)->update($data_user);
+
+				if(Input::hasFile("avatar"))
+				{
+					$avatar = Input::file("avatar");
+					$hash_avatar = md5($avatar->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/avatar/".$hash_avatar;
+					$avatar->move(storage_path()."/uploads/".$user_id."/avatar/", md5($avatar->getClientOriginalName()));
+					$company = User::find($user_id)->own;
+					$company->avatar_filepath = $hash_avatar;
+					$company->save();
+				}
+
+				if(Input::hasFile("logo"))
+				{
+					$logo = Input::file("logo");
+					$hash_logo = md5($logo->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/logo/".$hash_logo;
+					$logo->move(storage_path()."/uploads/".$user_id."/logo/", md5($logo->getClientOriginalName()));
+					$company = User::find($user_id)->own;
+					$company->photo_filepath = $hash_logo;
+					$company->save();
+				}
+			}
+		}
+		
+		Session::set("headerTitle", "edition");
+		$infos = ["Votre profil à été édité."];
+		return Redirect::to("/user/edit")
+			->with("notifications_infos", $infos);
+
 	}
 }

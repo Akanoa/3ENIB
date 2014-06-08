@@ -3,6 +3,7 @@
 use Illuminate\Auth\UserInterface;
 
 class User extends Eloquent implements UserInterface{
+	
 	public function own(){
 		return $this->morphTo();
 	}

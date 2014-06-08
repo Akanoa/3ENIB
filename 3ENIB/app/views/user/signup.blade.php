@@ -197,7 +197,7 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="expertise">Mots clefs</label>  
     <div class="col-md-4">
-    {{Form::password("expertise", array("placeholder"=>"Mots clefs décrivant votre secteur d'activité", "class"=>"form-control input-md"))}}
+    {{Form::text("expertise", "",array("placeholder"=>"Mots clefs décrivant votre secteur d'activité", "class"=>"form-control input-md"))}}
     </div>
       {{$errors->first("password_confirmation", '<span class="help-block">:message</span>')}}
   </div>
@@ -241,7 +241,7 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="siret">N° SIRET</label>  
     <div class="col-md-4">
-    {{Form::password("siret", array("placeholder"=>"Votre SIRET", "class"=>"form-control input-md"))}}
+    {{Form::text("siret", "",array("placeholder"=>"Votre SIRET", "class"=>"form-control input-md"))}}
     </div>
       {{$errors->first("password_confirmation", '<span class="help-block">:message</span>')}}
   </div>

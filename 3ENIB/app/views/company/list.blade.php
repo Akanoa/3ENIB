@@ -5,20 +5,33 @@
 <h1>Liste des Entreprises</h1>
 
 @if ($companies)
+	
 
-	@foreach ($companies as $c)
+	<div class="row">
+		<div class="col-md-12"><hr></div>
 
-		<h2><a href="{{URL::to('company').'/'.$c->id}}">{{$c->name}}</a></h2>
+		@foreach ($companies as $c)
 
-		<br/>
+			<div class="col-md-6 text-center">
+				<img class="logo-company" src="{{$_ENV['root_site']}}/document/logo/{{$c->user->id}}/{{$c->photo_filepath}}">
+			</div>
+			<div class="col-md-6">
+				<h2>
+					<a href="{{URL::to('company').'/'.$c->id}}">{{$c->name}}</a>
+				</h2>
+				<p>{{Str::limit($c->description, 500)}}</p>
+			</div>
 
-		<p>{{Str::limit($c->description, 200)}}</p>
+			<div class="col-md-12"><hr></div>
 
-		<img src="{{$c->photo_filepath}}">
-
-
-	@endforeach
-
+		@endforeach
+	</div>
+@else 
+	<div class="row">
+		<div class="col-md-12">
+			<p>Il n'y a pas encore d'entreprise référencées sur le site</p>
+		</div>
+	</div>
 @endif
 
 @endsection

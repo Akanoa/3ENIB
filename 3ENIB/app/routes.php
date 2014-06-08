@@ -11,9 +11,12 @@
 |
 */
 Route::get('/', function(){
+	Session::set("headerTitle", "Acceuil");
 	return View::make("home");
 });
+
 Route::resource('company', 'CompanyController');
 
 Route::controller('user', 'UserController');
+Route::controller('document', 'DocumentController');
 // Route::controller('password', 'RemindersController');
