@@ -8,7 +8,7 @@ class Project extends Eloquent {
         return $this->hasMany('student');
     }
 
-    public function companys(){
+    public function company(){
         return $this->belongsTo('company');
     }
 }

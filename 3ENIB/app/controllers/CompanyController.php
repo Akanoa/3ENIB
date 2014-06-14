@@ -48,10 +48,15 @@ class CompanyController extends \BaseController {
 	public function show($id)
 	{
 		$company = Company::find($id);
-		$projects = $company->projects();
+		$projects = $company->projects;
 		$headerTitle = "Entreprises | ".$company->name;
+
+		$authorized = False;
+		if($company->user->id == Auth::user()->id or Auth::user()->admin == 1)
+			$authorized = True;
+
 		Session::set('headerTitle', $headerTitle);
-		return View::make("company.show", compact("company", "projects"));
+		return View::make("company.show", compact("company", "projects", "authorized"));
 	}
 
 

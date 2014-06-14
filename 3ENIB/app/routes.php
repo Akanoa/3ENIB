@@ -17,6 +17,8 @@ Route::get('/', function(){
 
 Route::resource('company', 'CompanyController');
 
+Route::controller('project', 'ProjectController');
+Route::controller('post', 'PostController');
 Route::controller('user', 'UserController');
 Route::controller('document', 'DocumentController');
 // Route::controller('password', 'RemindersController');

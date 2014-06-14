@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "bootstrap"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "public"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "app"
+		}
+	]
+}

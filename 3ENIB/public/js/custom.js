@@ -12,4 +12,13 @@ $(document).ready(function(){
 			$("#signup-student").fadeOut();
 		}
 	});
+
+	$(".post-panel-remove").click(function(event) {
+		if (confirm('Are you sure you want to save this thing into the database?')) {
+    		alert("oui");
+		} 
+		else {
+		    alert("non");
+		}
+	});
 });

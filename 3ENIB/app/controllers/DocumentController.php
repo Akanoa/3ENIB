@@ -12,22 +12,16 @@ class DocumentController extends BaseController
 	}
 
 
-	public function getAvatar($name)
+	public function getAvatar($id, $name)
 	{
-		if(Auth::check())
-		{
-			$path = storage_path()."/uploads/".Auth::user()->id."/avatar/".$name;
-			$contents = file_get_contents($path);
-			$statusCode = "200 OK";
-			$response = Response::make($contents, $statusCode);
-			$response->header('Content-Type', 'image/jpeg');
-			return $response;
-		}
-		else
-		{
-			throw new HttpExecption("403 Forbidden", 403);
-			
-		}
+
+		$path = storage_path()."/uploads/".$id."/avatar/".$name;
+		$contents = file_get_contents($path);
+		$statusCode = "200 OK";
+		$response = Response::make($contents, $statusCode);
+		$response->header('Content-Type', 'image/jpeg');
+		return $response;
+		
 	}
 
 	public function getLogo($id, $name)

@@ -64,13 +64,39 @@
 		<div class="col-md-12"><hr></div>
 
 		<div class="col-md-12">
-			<h3>Nos projets</h3>
+			<div class="row">
+				<div class="col-md-2">
+					<h3 class="our-projects-title">Nos projets</h3>
+				</div>
+				<div class="col-md-2">
+					@if($authorized)
+						<a href="{{URL::to('project/create')}}"><button class="btn btn-success">Créer un nouveau projet</button></a>
+					@endif
+				</div>
+			</div>
 			@if($projects)
-				@foreach($projects as $p)
-					<h4>{{$p->name}}</h4>
-				@endforeach
+				<div class="row">
+					@foreach($projects as $p)
+						<div class="col-md-2">
+							<p><a href="{{URL::to('project/show')}}/{{$p->id}}"><b>{{$p->name}}</b></a></p>
+						</div>
+						<div class="col-md-6">
+							<p>{{Str::limit($p->description, 100)}}</p>
+						</div>
+						@if($authorized)
+							<div class="col-md-1">
+								<a href="{{URL::to('project/edit')}}/{{$p->id}}"><button class="btn btn-info">Modifier</button></a>
+							</div>
+							<div class="col-md-1">
+								<a href="#"><button class="btn btn-danger">Supprimer le projet</button></a>
+							</div>
+						@endif
+					@endforeach
+				</div>
 			@endif
 		</div>
+
+		<div class="col-md-12"><hr></div>
 	</div>
 
 

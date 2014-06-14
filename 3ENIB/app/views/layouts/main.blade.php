@@ -40,7 +40,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if(!Auth::guest())
                         <li>
-                            <img class="navbar-brand img-circle" src="{{$_ENV['root_site']}}/document/avatar/{{Auth::user()->own->avatar_filepath}}" alt="">
+                            <img class="navbar-brand img-circle" src="{{$_ENV['root_site']}}/document/avatar/{{Auth::user()->id}}/{{Auth::user()->own->avatar_filepath}}" alt="">
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Espace Utilisateur<b class="caret"></b></a>
@@ -103,6 +103,6 @@
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     {{HTML::script("js/bootstrap.min.js")}}
-    {{HTML::script("js/signup.js")}}
+    {{HTML::script("js/custom.js")}}
     {{HTML::script("js/filestyle.js")}}
 </html>
