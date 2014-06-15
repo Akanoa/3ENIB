@@ -43,34 +43,47 @@ body{
 {
 	margin-top: 10px;
 	margin-bottom: 10px;
-}
 
-.post-avatar
-{
-	height: 50px;
-}
+	.post-avatar
+	{
+		height: 50px;
+	}
 
-.post-message
-{
-	padding: 25px;
-	line-height: 1em;
-	background-color: rgba(160, 149, 149, 0.51);
-}
+	.post-message
+	{
+		padding: 25px;
+		line-height: 1em;
+		background-color: rgba(160, 149, 149, 0.51);
+	}
 
-.post-panel
-{
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-}
+	.post-edit
+	{
+		margin-top: 10px;
 
-.post-panel a
-{
-	opacity: 0.2;
-}
+		.post-edit-btn
+		{
+			margin-top: 5px;
+		}
+	}
 
-.post-panel a:hover
-{
-	opacity: 1;
-	color: black;
+	.post-panel
+	{
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+
+		.post-panel-edit, .post-panel-remove
+		{
+			opacity: 0.2;
+			color: black;
+			cursor: pointer;
+		}
+
+		.post-panel-edit:hover, .post-panel-remove:hover
+		{
+			opacity: 1;
+			color: black;
+		}
+
+	}
 }

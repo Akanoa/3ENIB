@@ -69,11 +69,24 @@
 					<div class="row post">
 						<div class="col-md-11 post-message">
 							{{$post->message}}
+							@if($auth and ($post->user->id == Auth::user()->id or Auth::user()->admin==1))
+							{{Form::open(["url"=>"/post/edit/".$post->id,"method"=>"post", "class"=>"post-edit"])}}
+							  {{Form::hidden("redirection", "project/show/".$project->id)}}
+						      <div class="row">
+						        <div class="col-md-10">                     
+						          {{ Form::textarea('message', $post->message, ['placeholder'=>"Votre message",'class' => 'form-control post-edit-form', "rows"=>3]) }}
+						        </div>
+						        <div class="col-md-1">
+						          {{ Form::submit('Editer', array('class' => 'btn btn-info post-edit-btn')) }}
+						        </div>
+						      </div>
+							{{Form::close()}}
 							<div class="post-panel">
-								<a href='#'><span class="glyphicon glyphicon-pencil"/></a>
+								<span class="glyphicon glyphicon-pencil post-panel-edit"></span>
 								&nbsp;
-								<a href='#'><span class="glyphicon glyphicon-remove"/></a>
+								<a href="{{URL::to('post/delete')}}/{{$post->id}}"><span class="glyphicon glyphicon-remove post-panel-remove"></span></a>
 							</div>
+							@endif
 						</div>
 						<div class="col-md-1">
 							<img class="img-circle post-avatar" src="{{$_ENV['root_site']}}/document/avatar/{{$post->user_id}}/{{User::find($post->user_id)->own->avatar_filepath}}" alt="">
@@ -86,13 +99,26 @@
 						</div>
 						<div class="col-md-11 post-message">
 							{{$post->message}}
-							<div class="post-panel">
-								<a href='#'><span class="glyphicon glyphicon-pencil"/></a>
-								&nbsp;
-								<a href='#'><span class="glyphicon glyphicon-remove"/></a>
+							@if($auth and ($post->user->id == Auth::user()->id or Auth::user()->admin==1))
+							{{Form::open(["url"=>"/post/edit/".$post->id,"method"=>"post", "class"=>"post-edit"])}}
+							{{Form::hidden("redirection", "project/show/".$project->id)}}
+							<div class="row">
+								<div class="col-md-10">                     
+									{{ Form::textarea('message', $post->message, ['placeholder'=>"Votre message",'class' => 'form-control post-edit-form', "rows"=>3]) }}
+								</div>
+								<div class="col-md-1">
+									{{ Form::submit('Editer', array('class' => 'btn btn-info post-edit-btn')) }}
+								</div>
 							</div>
+							{{Form::close()}}
+							<div class="post-panel">
+								<span class="glyphicon glyphicon-pencil post-panel-edit"></span>
+								&nbsp;
+								<a href="{{URL::to('post/delete')}}/{{$post->id}}"><span class="glyphicon glyphicon-remove post-panel-remove"></span></a>
+							</div>
+							@endif
 						</div>
-					</div> 
+					</div>
 				@endif
 			@endforeach
 		@endif

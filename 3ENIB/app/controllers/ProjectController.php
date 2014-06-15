@@ -46,8 +46,9 @@ class ProjectController extends BaseController {
 		$project = Project::find($id);
 		$posts = Post::where("project_id", "=", $id)->where("state", "=", 1)->get();
 		$files = [];
+		$auth = Auth::check();
 		Session::set("headerTitle", "Entreprise | ".$project->company->name);
-		return View::make("project.show", compact("project", "posts", "files"));
+		return View::make("project.show", compact("project", "posts", "files", "auth"));
 	}
 
 

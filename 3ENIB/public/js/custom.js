@@ -1,4 +1,4 @@
-$(document).ready(function(){
+(function ( $ ) {
 	$("#signup-company").fadeOut();
 	$("#student-subscription").change(function(){
 		if($(this).is(':checked')){
@@ -14,11 +14,19 @@ $(document).ready(function(){
 	});
 
 	$(".post-panel-remove").click(function(event) {
-		if (confirm('Are you sure you want to save this thing into the database?')) {
-    		alert("oui");
+		if (confirm('Voulez vous supprimer ce message?')) {
+			var val = $(this).parent()[0].href;
+			window.location.replace(val);
 		} 
 		else {
-		    alert("non");
+		    return false;
 		}
 	});
-});
+
+	$(".post-edit").fadeToggle();
+
+	$(".post-panel-edit").click(function(event){
+		var form = $(this).parent().parent().find("form").fadeToggle();
+		console.log("test");
+	});
+}( jQuery ));
