@@ -2,6 +2,12 @@
 
 class ProjectController extends BaseController {
 
+	public function __construct()
+	{
+		$this->beforeFilter('auth', ["except"=>["getShow"]]);
+		$this->beforeFilter('csrf', array('on' => 'post'));
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -18,9 +24,25 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function getCreate($company_id)
 	{
-		
+		$company = Company::find($company_id);
+		$user = Auth::user();
+		if($user->own_type == "student" and $user->admin == 0)
+		{
+			Session::set("headerTitle", "Entreprise | ".$company->name);
+			$infos = ["Vous n'êtes pas autorisé à créer un projet"];
+			return Redirect::to('company/'.$company_id)
+				->with("notifications_errors", $infos);
+		}
+		else
+		{
+
+
+			Session::set("headerTitle", "Entreprise | ".$company->name);
+			return View::make("project.create")
+				->with("company_id", $company_id);
+		}
 	}
 
 
@@ -29,9 +51,45 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function postCreate()
 	{
-		//
+		$rules = array(
+				"name"=>"required|max:255",
+				"remuneration"=>"required|numeric",
+				"estimated_time"=>"max:255",
+				"skills"=>"max:255",
+			);
+
+		$validation = Validator::make(Input::all(), $rules);
+
+		if($validation->fails())
+		{
+			Session::set("headerTitle", "Edition");
+			return Redirect::to("project/edit/".$id)
+				->withErrors($validation)
+				->withInput();
+		}
+		else
+		{
+			$company_id = Input::get("company_id");
+			$datas=[
+				"name"=>Input::get("name"),
+				"description"=>Input::get("description"),
+				"required_skills"=>Input::get("skills"),
+				"estimated_time"=>Input::get("estimated_time"),
+				"remuneration"=>Input::get("remuneration"),
+				"state"=>0,
+				"company_id"=>$company_id
+			];
+
+			Project::create($datas);
+
+			$infos = ["Votre projet a été soumis à la modération, il sera visible pour le reste des étudiants dès que le projet sera validé."];
+
+			Session::set("headerTitle", "Edition");
+			return Redirect::to("company/".$company_id)
+				->with("notifications_infos", $infos);
+		}
 	}
 
 
@@ -106,7 +164,23 @@ class ProjectController extends BaseController {
 		}
 		else
 		{
-			echo "test";
+			$datas=[
+				"name"=>Input::get("name"),
+				"description"=>Input::get("description"),
+				"skills"=>Input::get("skills"),
+				"estimated_time"=>Input::get("estimated_time"),
+				"remuneration"=>Input::get("remuneration")
+			];
+
+			$project = Project::find($id);
+
+			$project->update($datas);
+
+			$infos = ["Le projet a été édité."];
+
+			Session::set("headerTitle", "Edition");
+			return Redirect::to("company/".$project->company_id)
+				->with("notifications_infos", $infos);
 		}
 	}
 

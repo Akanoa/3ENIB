@@ -70,29 +70,29 @@
 				</div>
 				<div class="col-md-2">
 					@if($authorized)
-						<a href="{{URL::to('project/create')}}"><button class="btn btn-success">Créer un nouveau projet</button></a>
+						<a href="{{URL::to('project/create')}}/{{$company->id}}"><button class="btn btn-success">Créer un nouveau projet</button></a>
 					@endif
 				</div>
 			</div>
 			@if($projects)
-				<div class="row">
-					@foreach($projects as $p)
-						<div class="col-md-2">
-							<p><a href="{{URL::to('project/show')}}/{{$p->id}}"><b>{{$p->name}}</b></a></p>
+				@foreach($projects as $p)
+					<div class="row">
+					<div class="col-md-2">
+						<p><a href="{{URL::to('project/show')}}/{{$p->id}}"><b>{{$p->name}}</b></a></p>
+					</div>
+					<div class="col-md-6">
+						<p>{{Str::limit($p->description, 100)}}</p>
+					</div>
+					@if($authorized)
+						<div class="col-md-1">
+							<a href="{{URL::to('project/edit')}}/{{$p->id}}"><button class="btn btn-info">Modifier</button></a>
 						</div>
-						<div class="col-md-6">
-							<p>{{Str::limit($p->description, 100)}}</p>
+						<div class="col-md-1">
+							<a href="#"><button class="btn btn-danger">Supprimer le projet</button></a>
 						</div>
-						@if($authorized)
-							<div class="col-md-1">
-								<a href="{{URL::to('project/edit')}}/{{$p->id}}"><button class="btn btn-info">Modifier</button></a>
-							</div>
-							<div class="col-md-1">
-								<a href="#"><button class="btn btn-danger">Supprimer le projet</button></a>
-							</div>
-						@endif
-					@endforeach
+					@endif
 				</div>
+				@endforeach
 			@endif
 		</div>
 

@@ -48,7 +48,7 @@
 	<div class="col-md-12">
 		<h3>Communiquer avec nous</h2>
 		
-		{{Form::open(["url"=>"/post/create","method"=>"post"])}}
+		{{Form::open(["url"=>"/post/create/","method"=>"post"])}}
 		  {{Form::hidden("redirection", "project/show/".$project->id)}}
 		  {{Form::hidden("project_id", $project->id)}}
 	      <div class="row">
