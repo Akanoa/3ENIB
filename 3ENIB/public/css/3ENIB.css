@@ -25,6 +25,9 @@ body {
   margin-left: -20px;
   line-height: 35px;
 }
+.project-short {
+  margin-bottom: 10px;
+}
 .post {
   margin-top: 10px;
   margin-bottom: 10px;

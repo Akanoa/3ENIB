@@ -17,7 +17,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="firstname">Prénom</label>  
         <div class="col-md-4">
-        {{Form::text("firstname", $datas["firstname"], array("placeholder"=>"prénom", "class"=>"form-control input-md"))}}
+        {{Form::text("firstname", App::make("3enib_text")->filterText($datas["firstname"]), array("placeholder"=>"prénom", "class"=>"form-control input-md"))}}
         </div>
           {{$errors->first("firstname", '<span class="help-block">:message</span>')}}
       </div>
@@ -26,7 +26,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="lastname">Nom</label>  
         <div class="col-md-4">
-        {{Form::text("lastname", $datas["lastname"], array("placeholder"=>"nom", "class"=>"form-control input-md"))}}
+        {{Form::text("lastname", App::make("3enib_text")->filterText($datas["lastname"]), array("placeholder"=>"nom", "class"=>"form-control input-md"))}}
         </div>
           {{$errors->first("lastname", '<span class="help-block">:message</span>')}}
       </div>
@@ -35,7 +35,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="email">Email</label>  
         <div class="col-md-4">
-        {{Form::email("email", $datas["email"], array("placeholder"=>"email", "class"=>"form-control input-md"))}}
+        {{Form::email("email", App::make("3enib_text")->filterText($datas["email"]), array("placeholder"=>"email", "class"=>"form-control input-md"))}}
         </div>
           {{$errors->first("email", '<span class="help-block">:message</span>')}}
       </div>
@@ -44,7 +44,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="phone_number">Téléphone</label>  
         <div class="col-md-4">
-        {{Form::text("phone_number", $datas["phone_number"], array("placeholder"=>"téléphone", "class"=>"form-control input-md"))}}
+        {{Form::text("phone_number", App::make("3enib_text")->filterText($datas["phone_number"]), array("placeholder"=>"téléphone", "class"=>"form-control input-md"))}}
         </div>
       </div>
 
@@ -66,13 +66,22 @@
           {{$errors->first("password_confirmation", '<span class="help-block">:message</span>')}}
       </div>
 
+  <!-- Avatar -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="avatar">Choisssissez votre avatar</label>  
+    <div class="col-md-4">
+    {{Form::file("avatar", ["class"=>"filestyle", "data-buttonText"=>"Avatar", "data-iconName"=>"glyphicon-inbox"])}}
+    </div>
+      {{$errors->first("avatar", '<span class="help-block">:message</span>')}}
+  </div>
+
       <!-- Avatar -->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="avatar">Avatar</label>  
+        <label class="col-md-4 control-label" for="photo">Choississez votre photo de profil</label>  
         <div class="col-md-4">
-        {{Form::file("avatar", ["class"=>"filestyle", "data-buttonText"=>"Choississez votre avatar", "data-iconName"=>"glyphicon-inbox"])}}
+        {{Form::file("photo", ["class"=>"filestyle", "data-buttonText"=>"Photo de profil", "data-iconName"=>"glyphicon-inbox"])}}
         </div>
-          {{$errors->first("avatar", '<span class="help-block">:message</span>')}}
+          {{$errors->first("photo", '<span class="help-block">:message</span>')}}
       </div>
 
       <!-- Avatar -->
@@ -106,7 +115,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="description">Parlez nous de vous</label>
         <div class="col-md-4">                     
-          {{ Form::textarea('description', $datas["description"], ['placeholder'=>"Votre petit +...",'class' => 'form-control']) }}
+          {{ Form::textarea('description', App::make("3enib_text")->filterText($datas["description"]), ['placeholder'=>"Votre petit +...",'class' => 'form-control light-textarea']) }}
         </div>
       </div>
 
@@ -135,7 +144,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="name">Nom de l'entreprise</label>  
         <div class="col-md-4">
-        {{Form::text("name", $datas["name"], array("placeholder"=>"Nom de l'entreprise", "class"=>"form-control input-md"))}}
+        {{Form::text("name", App::make("3enib_text")->filterText($datas["name"]), array("placeholder"=>"Nom de l'entreprise", "class"=>"form-control input-md"))}}
         </div>
           {{$errors->first("name", '<span class="help-block">:message</span>')}}
       </div>
@@ -144,7 +153,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="email">Email</label>  
         <div class="col-md-4">
-        {{Form::email("email", $datas["email"], array("placeholder"=>"email", "class"=>"form-control input-md"))}}
+        {{Form::email("email", App::make("3enib_text")->filterText($datas["email"]), array("placeholder"=>"email", "class"=>"form-control input-md"))}}
         </div>
           {{$errors->first("email", '<span class="help-block">:message</span>')}}
       </div>
@@ -171,7 +180,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="expertise">Mots clefs</label>  
         <div class="col-md-4">
-        {{Form::text("expertise", $datas["expertise"],array("placeholder"=>"Mots clefs décrivant votre secteur d'activité", "class"=>"form-control input-md"))}}
+        {{Form::text("expertise", App::make("3enib_text")->filterText($datas["expertise"]),array("placeholder"=>"Mots clefs décrivant votre secteur d'activité", "class"=>"form-control input-md"))}}
         </div>
       </div>
 
@@ -197,7 +206,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="contact">Adresse de contact</label>
         <div class="col-md-4">
-          {{ Form::textarea('contact',$datas["contact"], ['placeholder'=>"Où vous contacter", "rows"=>3,'class' => 'form-control']) }}
+          {{ Form::textarea('contact',App::make("3enib_text")->filterText($datas["contact"]), ['placeholder'=>"Où vous contacter", "rows"=>3,'class' => 'form-control light-textarea']) }}
         </div>
       </div>
 
@@ -205,7 +214,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="phone_number">Téléphone</label>  
         <div class="col-md-4">
-        {{Form::text("phone_number", $datas["phone_number"], array("placeholder"=>"téléphone", "class"=>"form-control input-md"))}}
+        {{Form::text("phone_number", App::make("3enib_text")->filterText($datas["phone_number"]), array("placeholder"=>"téléphone", "class"=>"form-control input-md"))}}
         </div>
       </div>
 
@@ -214,7 +223,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="siret">N° SIRET</label>  
         <div class="col-md-4">
-        {{Form::text("siret", $datas["siret"], array("placeholder"=>"Votre SIRET", "class"=>"form-control input-md"))}}
+        {{Form::text("siret", App::make("3enib_text")->filterText($datas["siret"]), array("placeholder"=>"Votre SIRET", "class"=>"form-control input-md"))}}
         </div>
           {{$errors->first("password_confirmation", '<span class="help-block">:message</span>')}}
       </div>
@@ -224,7 +233,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="description">Présentation de votre entreprise</label>
         <div class="col-md-4">
-          {{ Form::textarea('description', $datas["description"], ['placeholder'=>"Parlez nous de votre entreprise...",'class' => 'form-control']) }}
+          {{ Form::textarea('description', App::make("3enib_text")->filterText($datas["description"]), ['placeholder'=>"Parlez nous de votre entreprise...",'class' => 'form-control light-textarea']) }}
         </div>
       </div>
 

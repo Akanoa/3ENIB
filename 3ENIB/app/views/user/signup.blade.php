@@ -94,11 +94,20 @@
 
   <!-- Avatar -->
   <div class="form-group">
-    <label class="col-md-4 control-label" for="avatar">Avatar</label>  
+    <label class="col-md-4 control-label" for="avatar">Choisssissez votre avatar</label>  
     <div class="col-md-4">
-    {{Form::file("avatar", ["class"=>"filestyle", "data-buttonText"=>"Choississez votre avatar", "data-iconName"=>"glyphicon-inbox"])}}
+    {{Form::file("avatar", ["class"=>"filestyle", "data-buttonText"=>"Avatar", "data-iconName"=>"glyphicon-inbox"])}}
     </div>
       {{$errors->first("avatar", '<span class="help-block">:message</span>')}}
+  </div>
+
+  <!-- Avatar -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="photo">Choississez votre photo de profil</label>  
+    <div class="col-md-4">
+    {{Form::file("photo", ["class"=>"filestyle", "data-buttonText"=>"Photo de profil", "data-iconName"=>"glyphicon-inbox"])}}
+    </div>
+      {{$errors->first("photo", '<span class="help-block">:message</span>')}}
   </div>
 
   <!-- Avatar -->
@@ -132,7 +141,7 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="description">Parlez nous de vous</label>
     <div class="col-md-4">                     
-      {{ Form::textarea('description', null, ['placeholder'=>"Votre petit +...",'class' => 'form-control']) }}
+      {{ Form::textarea('description', null, ['placeholder'=>"Votre petit +...",'class' => 'form-control light-textarea']) }}
     </div>
   </div>
 
@@ -224,7 +233,7 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="contact">Adresse de contact</label>
     <div class="col-md-4">
-      {{ Form::textarea('contact',null, ['placeholder'=>"Où vous contacter", "rows"=>3,'class' => 'form-control']) }}
+      {{ Form::textarea('contact',null, ['placeholder'=>"Où vous contacter", "rows"=>3,'class' => 'form-control light-textarea']) }}
     </div>
   </div>
 
@@ -251,7 +260,7 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="description">Présentation de votre entreprise</label>
     <div class="col-md-4">
-      {{ Form::textarea('description',null, ['placeholder'=>"Parlez nous de votre entreprise...",'class' => 'form-control']) }}
+      {{ Form::textarea('description',null, ['placeholder'=>"Parlez nous de votre entreprise...",'class' => 'form-control light-textarea']) }}
     </div>
   </div>
 

@@ -4,7 +4,7 @@ class ProjectController extends BaseController {
 
 	public function __construct()
 	{
-		$this->beforeFilter('auth', ["except"=>["getShow"]]);
+		$this->beforeFilter('auth', ["except"=>["getShow", "getList"]]);
 		$this->beforeFilter('csrf', array('on' => 'post'));
 	}
 
@@ -13,9 +13,11 @@ class ProjectController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getList()
 	{
-
+		$projects = Project::orderBy("company_id", "ASC")->orderBy("state")->get();
+		Session::set("headerTitle", "List des projets");
+		return View::make("project.list", compact("projects"));
 	}
 
 
@@ -102,11 +104,27 @@ class ProjectController extends BaseController {
 	public function getShow($id)
 	{
 		$project = Project::find($id);
+
+		if(!App::make("3enib_project")->isVisible($project))
+		{
+			Session::set("headerTitle", "Entreprise | ".$project->company->name);
+			return Redirect::to("company/".$project->company->id)
+				->with("notifications_errors", ["Vous n'avez pas le droit de visionner ce projet"]);
+		}
+
+		$students = [];
+		foreach($project->students()->get() as $student)
+		{	
+			
+			array_push($students, [$student, PivotStudentProject::where("student_id", "=", $student->id)->where("project_id", "=", $project->id)->get()[0]->student_state]);
+		}
+
+
 		$posts = Post::where("project_id", "=", $id)->where("state", "=", 1)->get();
 		$files = [];
 		$auth = Auth::check();
 		Session::set("headerTitle", "Entreprise | ".$project->company->name);
-		return View::make("project.show", compact("project", "posts", "files", "auth"));
+		return View::make("project.show", compact("project", "posts", "files", "auth", "students"));
 	}
 
 
@@ -184,6 +202,161 @@ class ProjectController extends BaseController {
 		}
 	}
 
+	public function postSignup()
+	{
+		$project_id = Input::get("project_id");
+		$student_id = Input::get("student_id");
+
+		$datas =[
+			"project_id" =>$project_id,
+			"student_id" =>$student_id
+		];
+
+		$project = Project::find($project_id);
+
+		$project->students()->attach($student_id);
+
+
+		Session::set("headerTitle", "Projet | ".Project::find($project_id)->name);
+		return Redirect::to("project/show/".$project_id);
+	}
+
+	public function postSignout()
+	{
+		$project_id = Input::get("project_id");
+		$student_id = Input::get("student_id");
+
+		$datas =[
+			"project_id" =>$project_id,
+			"student_id" =>$student_id
+		];
+
+		$project = Project::find($project_id);
+
+		$project->students()->detach($student_id);
+
+
+		Session::set("headerTitle", "Projet | ".Project::find($project_id)->name);
+		return Redirect::to("project/show/".$project_id);
+	}
+
+	public function postValidate()
+	{
+		$project_id = Input::get("project_id");
+
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			Session::set("headerTitle", "Projet | Liste des projets");
+			return Redirect::to("project/list")
+				->with("notifications_errors", ["Vous êtes pas autorisé à faire ça"]);
+		}
+
+		$project = Project::find($project_id);
+		$project->state = 1;
+		$project->save();
+		Session::set("headerTitle", "Projet | Liste des projets");
+		return Redirect::to("project/list");
+	}
+
+
+	public function postActivate()
+	{
+		$project_id = Input::get("project_id");
+
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			Session::set("headerTitle", "Projet | Liste des projets");
+			return Redirect::to("project/list")
+				->with("notifications_errors", ["Vous êtes pas autorisé à faire ça"]);
+		}
+
+		$project = Project::find($project_id);
+		$project->state = 2;
+		$project->save();
+		Session::set("headerTitle", "Projet | Liste des projets");
+		return Redirect::to("project/list");
+	}
+
+	public function postArchive()
+	{
+		$project_id = Input::get("project_id");
+
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			Session::set("headerTitle", "Projet | Liste des projets");
+			return Redirect::to("project/list")
+				->with("notifications_errors", ["Vous êtes pas autorisé à faire ça"]);
+		}
+
+		$project = Project::find($project_id);
+		$project->state = 3;
+		$project->save();
+		Session::set("headerTitle", "Projet | Liste des projets");
+		return Redirect::to("project/list");
+	}
+
+
+	public function postClose()
+	{
+		$project_id = Input::get("project_id");
+
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			Session::set("headerTitle", "Projet | Liste des projets");
+			return Redirect::to("project/list")
+				->with("notifications_errors", ["Vous êtes pas autorisé à faire ça"]);
+		}
+
+		$project = Project::find($project_id);
+		$project->state = 4;
+		$project->save();
+		Session::set("headerTitle", "Projet | Liste des projets");
+		return Redirect::to("project/list");
+	}
+
+	public function postExclude()
+	{
+		$project_id = Input::get("project_id");
+		$student_id = Input::get("student_id");
+
+		$project = Project::find($project_id);
+
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			Session::set("headerTitle", "Projet | ".$project->name);
+			return Redirect::to("project/show/".$project->id)
+				->with("notifications_errors", ["Vous êtes pas autorisé à faire ça"]);
+		}
+
+		$student = Student::find($student_id);
+
+		PivotStudentProject::where("project_id", "=", $project_id)->where("student_id", "=", $student_id)->update(["student_state"=> 0]);
+		Session::set("headerTitle", "Projet | Liste des projets");
+		return Redirect::to("project/show/".$project->id)
+				->with("notifications_success", ["L'étudiant <b>".$student->firstname." ".$student->lastname." </b> est maintenant exclu du projet ".$project->name]);
+	}
+
+	public function postInclude()
+	{
+		$project_id = Input::get("project_id");
+		$student_id = Input::get("student_id");
+
+		$project = Project::find($project_id);
+
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			Session::set("headerTitle", "Projet | ".$project->name);
+			return Redirect::to("project/show/".$project->id)
+				->with("notifications_errors", ["Vous êtes pas autorisé à faire ça"]);
+		}
+
+		$student = Student::find($student_id);
+
+		PivotStudentProject::where("project_id", "=", $project_id)->where("student_id", "=", $student_id)->update(["student_state"=> 1]);
+		Session::set("headerTitle", "Projet | Liste des projets");
+		return Redirect::to("project/show/".$project->id)
+				->with("notifications_success", ["L'étudiant <b>".$student->firstname." ".$student->lastname." </b> est maintenant inclus dans le projet ".$project->name]);
+	}
 
 	/**
 	 * Update the specified resource in storage.

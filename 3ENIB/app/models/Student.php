@@ -10,4 +10,9 @@ class Student extends \Eloquent {
     {
         return $this->belongsTo('User');
     }
+
+    public function projects()
+    {
+    	return $this->hasMany('project');
+    }
 }

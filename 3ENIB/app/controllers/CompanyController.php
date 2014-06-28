@@ -10,10 +10,9 @@ class CompanyController extends \BaseController {
 	public function index()
 	{
 		$companies = Company::all();
-		$headerTitle = "Entreprises";
+		Session::set('headerTitle', "Entreprises");
 		return View::make("company.list")
-			->with('companies', $companies)
-			->with('headerTitle', $headerTitle);
+			->with('companies', $companies);
 	}
 
 

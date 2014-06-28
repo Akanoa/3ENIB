@@ -29,4 +29,26 @@
 		var form = $(this).parent().parent().find("form").fadeToggle();
 		console.log("test");
 	});
+
+	tinymce.init({selector : '.post-edit-form',
+				  plugins  : 'code image textcolor link',
+				  toolbar  : "undo \
+				  			  redo \
+				  			  bold \
+				  			  italic \
+				  			  underline \
+				  			  strikethrough \
+				  			  alignleft \
+				  			  aligncenter \
+				  			  alignright \
+				  			  alignjustify \
+				  			  forecolor \
+				  			  backcolor \
+				  			  code \
+				  			  image \
+				  			  link \
+				  			  ",
+				});
+
 }( jQuery ));
+

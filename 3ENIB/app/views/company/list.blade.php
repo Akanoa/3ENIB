@@ -19,7 +19,7 @@
 				<h2>
 					<a href="{{URL::to('company').'/'.$c->id}}">{{$c->name}}</a>
 				</h2>
-				<p>{{Str::limit($c->description, 500)}}</p>
+				<p>{{App::make("3enib_text")->filterText(Str::limit($c->description, 500))}}</p>
 			</div>
 
 			<div class="col-md-12"><hr></div>

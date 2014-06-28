@@ -64,6 +64,7 @@
           {{ Form::submit('Editer le projet', array('class' => 'btn btn-info btn-block')) }}
         </div>
       </div>
+      {{Form::close()}}
 
 
 @endsection

@@ -34,8 +34,10 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="{{URL::to('/')}}">Accueil</a></li>
                     <li><a href="{{URL::to('company')}}">Entreprises</a></li>
-                    <li><a href="{{URL::to('project')}}">Projets</a></li>
-                    <li><a href="#contact">Étudiants</a></li>
+                    <li><a href="{{URL::to('project/list')}}">Projets</a></li>
+                    @if (App::make("3enib_authz")->isAdmin())
+                        <li><a href="#contact">Étudiants</a></li>
+                    @endif
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if(!Auth::guest())
@@ -43,7 +45,7 @@
                             <img class="navbar-brand img-circle" src="{{$_ENV['root_site']}}/document/avatar/{{Auth::user()->id}}/{{Auth::user()->own->avatar_filepath}}" alt="">
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Espace Utilisateur<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{App::make("3enib_user")->formatedUserName()}}<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 @if(Auth::user()->own_type == "company")
                                     <li><a href="{{URL::to('company')}}/{{Auth::user()->own->id}}">Accéder à mon entreprise</a></li>
@@ -102,7 +104,9 @@
     </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
     {{HTML::script("js/bootstrap.min.js")}}
     {{HTML::script("js/custom.js")}}
     {{HTML::script("js/filestyle.js")}}
+    {{HTML::script("js/tinyMCE_fr_FR.js")}}
 </html>

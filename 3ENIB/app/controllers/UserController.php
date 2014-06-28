@@ -48,7 +48,8 @@ class UserController extends BaseController
 					"firstname"=>"required|between:2,50",
 					"lastname"=>"required|between:2,20",
 					"email"=>"required|email|unique:users|enib_email",
-					"avatar"=>"image|mimes:jpeg,bmp,png",
+					"avatar"=>"image|mimes:jpeg,png,tga",
+					"photo"=>"image|mimes:jpeg,png,tga",
 					"cv"=>"mimes:pdf",
 					"password"=>"required|min:5|confirmed",
 					"password_confirmation"=>"required"
@@ -96,7 +97,7 @@ class UserController extends BaseController
 
 				$user_id = DB::table('users')->insertGetId($data_user);
 
-				Student::where("id", "=", $id_student)->update(["user_id"=>$user_id]);
+				Student::find($id_student)->update(["user_id"=>$user_id]);
 
 				if(Input::hasFile("avatar"))
 				{
@@ -106,6 +107,17 @@ class UserController extends BaseController
 					$avatar->move(storage_path()."/uploads/".$user_id."/avatar/", md5($avatar->getClientOriginalName()));
 					$student = User::find($user_id)->own;
 					$student->avatar_filepath = $hash_avatar;
+					$student->save();
+				}
+
+				if(Input::hasFile("photo"))
+				{
+					$photo = Input::file("photo");
+					$hash_photo = md5($photo->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/photo/".$hash_photo;
+					$photo->move(storage_path()."/uploads/".$user_id."/photo/", md5($photo->getClientOriginalName()));
+					$student = User::find($user_id)->own;
+					$student->photo_filepath = $hash_photo;
 					$student->save();
 				}
 
@@ -132,7 +144,8 @@ class UserController extends BaseController
 						$message->to(Input::get("email"))->subject("Vérification email 3ENIB");
 					});
 
-
+				return Redirect::to('/')
+					->with("notifications_infos", ["Un email vous a été envoyé"]);
 			}
 		}
 
@@ -141,8 +154,8 @@ class UserController extends BaseController
 			$rules = array(
 					"name"=>"required|between:2,50",
 					"email"=>"required|email|unique:users",
-					"avatar"=>"image|mimes:jpeg,bmp,png",
-					"image"=>"image|mimes:jpeg,bmp,png",
+					"avatar"=>"image|mimes:jpeg,png,tga",
+					"image"=>"image|mimes:jpeg,png,tga",
 					"password"=>"required|min:5|confirmed",
 					"password_confirmation"=>"required",
 					"contact"=>"required",
@@ -217,6 +230,9 @@ class UserController extends BaseController
 						$message->from("subscription@3enib.fr");
 						$message->to(Input::get("email"))->subject("Vérification email 3ENIB");
 					});
+
+				return Redirect::to('/')
+					->with("notifications_infos", ["Un email vous a été envoyé"]);
 			}
 		}
 
@@ -436,7 +452,8 @@ class UserController extends BaseController
 					"firstname"=>"between:2,50",
 					"lastname"=>"between:2,20",
 					"email"=>"email|enib_email",
-					"avatar"=>"image|mimes:jpeg,bmp,png",
+					"avatar"=>"image|mimes:jpeg,png,tga",
+					"photo"=>"image|mimes:jpeg,png,tga",
 					"cv"=>"mimes:pdf",
 					"password"=>"min:5|confirmed",
 				);
@@ -500,6 +517,17 @@ class UserController extends BaseController
 					$student->save();
 				}
 
+				if(Input::hasFile("photo"))
+				{
+					$photo = Input::file("photo");
+					$hash_photo = md5($photo->getClientOriginalName());
+					$filepath = "/uploads/".$user_id."/photo/".$hash_photo;
+					$photo->move(storage_path()."/uploads/".$user_id."/photo/", md5($photo->getClientOriginalName()));
+					$student = User::find($user_id)->own;
+					$student->photo_filepath = $hash_photo;
+					$student->save();
+				}
+
 				if(Input::hasFile("cv"))
 				{
 					$cv = Input::file("cv");
@@ -518,8 +546,8 @@ class UserController extends BaseController
 			$rules = array(
 					"name"=>"between:2,50",
 					"email"=>"email",
-					"avatar"=>"image|mimes:jpeg,bmp,png",
-					"image"=>"image|mimes:jpeg,bmp,png",
+					"avatar"=>"image|mimes:jpeg,png,tga",
+					"image"=>"image|mimes:jpeg,png,tga",
 					"password"=>"min:5|confirmed",
 				);
 

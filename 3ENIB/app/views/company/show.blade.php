@@ -5,7 +5,7 @@
 @if ($company)
 
 	<div class="text-center">
-		<h1>{{$company->name}}</h1>
+		<h1>{{{$company->name}}}</h1>
 	</div>
 
 	<br/>
@@ -26,21 +26,21 @@
 					</div>
 					<div class="col-md-11">
 						<!-- <p>{{str_replace("‧", "<br/>", $company->contact)}}</p> -->
-						<p>{{nl2br($company->contact)}}</p>
+						<p>{{nl2br(App::make("3enib_text")->filterText($company->contact))}}</p>
 					</div>
 
 					<div class="col-md-1">
 						<span class="glyphicon glyphicon-phone-alt"></span>
 					</div>
 					<div class="col-md-11">
-							<p>{{$company->phone_number}}</p>
+							<p>{{{$company->phone_number}}}</p>
 					</div>
 
 					<div class="col-md-1">
 						<span class="glyphicon glyphicon-lock"></span>
 					</div>
 					<div class="col-md-11">
-							<p><b>N°SIRET</b>: {{$company->SIRET}}</p>
+							<p><b>N°SIRET</b>: {{{$company->SIRET}}}</p>
 					</div>
 
 				</div>
@@ -51,14 +51,14 @@
 
 		<div class="col-md-12 well">
 			<h3>Que faisons-nous?</h3>
-			<p>{{$company->description}}</p>
+			<p>{{App::make("3enib_text")->filterText($company->description)}}</p>
 		</div>
 
 		<div class="col-md-12"><hr></div>
 
 		<div class="col-md-12">
 			<h3>Nos domaine de compétence</h3>
-			<p>{{$company->expertise}}</p>
+			<p>{{{$company->expertise}}}</p>
 		</div>
 
 		<div class="col-md-12"><hr></div>
@@ -75,24 +75,31 @@
 				</div>
 			</div>
 			@if($projects)
+				<?php $i=0; ?>
 				@foreach($projects as $p)
-					<div class="row">
-					<div class="col-md-2">
-						<p><a href="{{URL::to('project/show')}}/{{$p->id}}"><b>{{$p->name}}</b></a></p>
-					</div>
-					<div class="col-md-6">
-						<p>{{Str::limit($p->description, 100)}}</p>
-					</div>
-					@if($authorized)
-						<div class="col-md-1">
-							<a href="{{URL::to('project/edit')}}/{{$p->id}}"><button class="btn btn-info">Modifier</button></a>
-						</div>
-						<div class="col-md-1">
-							<a href="#"><button class="btn btn-danger">Supprimer le projet</button></a>
+					@if (App::make("3enib_project")->isVisible($p))
+						<?php $i++; ?>
+						<div class="row project-short">
+							<div class="col-md-2">
+								<p><a href="{{URL::to('project/show')}}/{{$p->id}}"><b>{{$p->name}}</b></a></p>
+							</div>
+							<div class="col-md-6">
+								<p>{{App::make("3enib_text")->filterText(Str::limit($p->description, 100))}}</p>
+							</div>
+							@if($authorized)
+								<div class="col-md-1">
+									<a href="{{URL::to('project/edit')}}/{{$p->id}}"><button class="btn btn-info">Modifier</button></a>
+								</div>
+								<div class="col-md-1">
+									<a href="#"><button class="btn btn-danger">Supprimer le projet</button></a>
+								</div>
+							@endif
 						</div>
 					@endif
-				</div>
 				@endforeach
+				@if ($i == 0)
+					<div class="no-project">Aucun projet disponible actuellement.</div>
+				@endif
 			@endif
 		</div>
 
