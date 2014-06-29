@@ -4,8 +4,120 @@
 		"selected_items":
 		[
 			[
+				"Schema",
+				"Schema-drop	Schema-drop"
+			],
+			[
+				"time",
+				"timestamps"
+			],
+			[
 				"project",
+				"project_student_pivot"
+			],
+			[
+				"pass",
+				"passoword_reminders"
+			],
+			[
+				"Schem",
+				"Schema-create	Schema-create"
+			],
+			[
+				"compa",
+				"company"
+			],
+			[
+				"3enib_",
+				"3enib_authz"
+			],
+			[
+				"Project",
+				"PivotStudentProject"
+			],
+			[
+				"stude",
+				"student"
+			],
+			[
+				"stu",
+				"student"
+			],
+			[
+				"proje",
 				"project_id"
+			],
+			[
+				"projec",
+				"project_id"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"por",
+				"project"
+			],
+			[
+				"studne",
+				"students"
+			],
+			[
+				"s",
+				"subscribed"
+			],
+			[
+				"studen",
+				"students"
+			],
+			[
+				"fore",
+				"foreach	foreach …"
+			],
+			[
+				"Form-o",
+				"Form-open	Form-open"
+			],
+			[
+				"not",
+				"notifications_errors"
+			],
+			[
+				"student",
+				"student_id"
+			],
+			[
+				"Input",
+				"Input-get	Input-get"
+			],
+			[
+				"Redirect",
+				"Redirect-to	Redirect-to"
+			],
+			[
+				"con",
+				"conversionTable"
+			],
+			[
+				"proj",
+				"project"
+			],
+			[
+				"comap",
+				"company_id"
+			],
+			[
+				"in",
+				"infos"
+			],
+			[
+				"com",
+				"company_id"
+			],
+			[
+				"comp",
+				"company_id"
 			],
 			[
 				"attr",
@@ -44,10 +156,6 @@
 				"Route"
 			],
 			[
-				"Input",
-				"Input-all	Input-all"
-			],
-			[
 				"pos",
 				"posts"
 			],
@@ -62,14 +170,6 @@
 			[
 				"est",
 				"estimated_time"
-			],
-			[
-				"comp",
-				"company"
-			],
-			[
-				"margin",
-				"margin-top"
 			],
 			[
 				"pad",
@@ -122,10 +222,6 @@
 			[
 				"ha",
 				"hash_avatar"
-			],
-			[
-				"not",
-				"notifications_success"
 			],
 			[
 				"Ses",
@@ -200,10 +296,6 @@
 				"Form-close	Form-close"
 			],
 			[
-				"compa",
-				"compact"
-			],
-			[
 				"stud",
 				"student"
 			],
@@ -236,10 +328,6 @@
 				"Input-get	Input-get"
 			],
 			[
-				"studen",
-				"studentSpecialities"
-			],
-			[
 				"specia",
 				"specialities"
 			],
@@ -260,10 +348,6 @@
 				"skills"
 			],
 			[
-				"pass",
-				"password"
-			],
-			[
 				"fir",
 				"firstname"
 			],
@@ -280,14 +364,6 @@
 				"specialities-"
 			],
 			[
-				"Schema",
-				"Schema-table	Schema-table"
-			],
-			[
-				"Schem",
-				"Schema-rename	Schema-rename"
-			],
-			[
 				"Vie",
 				"View-make	View-make"
 			],
@@ -298,10 +374,6 @@
 			[
 				"hea",
 				"headerTitle"
-			],
-			[
-				"com",
-				"company"
 			],
 			[
 				"for",
@@ -318,10 +390,6 @@
 			[
 				"sta",
 				"standalone"
-			],
-			[
-				"in",
-				"index"
 			],
 			[
 				"vip",
@@ -352,10 +420,6 @@
 				"curY"
 			],
 			[
-				"s",
-				"screenX"
-			],
-			[
 				"sess",
 				"session_start"
 			],
@@ -372,66 +436,13 @@
 	"buffers":
 	[
 		{
-			"file": "app/models/Post.php",
+			"contents": "# Copyright (c) 1993-2009 Microsoft Corp.\n#\n# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.\n#\n# This file contains the mappings of IP addresses to host names. Each\n# entry should be kept on an individual line. The IP address should\n# be placed in the first column followed by the corresponding host name.\n# The IP address and the host name should be separated by at least one\n# space.\n#\n# Additionally, comments (such as these) may be inserted on individual\n# lines or following the machine name denoted by a '#' symbol.\n#\n# For example:\n#\n#      102.54.94.97     rhino.acme.com          # source server\n#       38.25.63.10     x.acme.com              # x client host\n\n# localhost name resolution is handled within DNS itself.\n#	127.0.0.1       localhost\n#	::1             localhost\n\n127.0.0.1       localhost\n127.0.0.1       localhost\n127.0.0.1       localhost\n\n91.127.182.78 3enib.resamap.com",
+			"file": "/C/Windows/System32/drivers/etc/hosts",
+			"file_size": 905,
+			"file_write_time": 130332737424234349,
 			"settings":
 			{
-				"buffer_size": 199,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/views/project/show.blade.php",
-			"settings":
-			{
-				"buffer_size": 4746,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/controllers/ProjectController.php",
-			"settings":
-			{
-				"buffer_size": 2564,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/js/custom.js",
-			"settings":
-			{
-				"buffer_size": 766,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/controllers/CompanyController.php",
-			"settings":
-			{
-				"buffer_size": 1546,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/controllers/PostController.php",
-			"settings":
-			{
-				"buffer_size": 1848,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/less/3ENIB.less",
-			"settings":
-			{
-				"buffer_size": 954,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/views/layouts/main.blade.php",
-			"settings":
-			{
-				"buffer_size": 4443,
+				"buffer_size": 914,
 				"line_ending": "Windows"
 			}
 		}
@@ -439,9 +450,25 @@
 	"build_system": "Packages/Python/Python.sublime-build",
 	"command_palette":
 	{
-		"height": 38.0,
+		"height": 63.0,
 		"selected_items":
 		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"syntax bl",
+				"Set Syntax: PHP - Laravel Blade"
+			],
+			[
+				"sysnt",
+				"Set Syntax: PHP"
+			],
+			[
+				"emem",
+				"Set Syntax: Emmet"
+			],
 			[
 				"ena",
 				"Package Control: Enable Package"
@@ -465,10 +492,6 @@
 			[
 				"rem",
 				"Package Control: Remove Package"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"dis",
@@ -523,7 +546,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 368.0
+		"width": 480.0
 	},
 	"console":
 	{
@@ -544,42 +567,59 @@
 	},
 	"file_history":
 	[
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_06_15_095516_backup-message.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/public/css/3ENIB.css",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_06_28_223001_migration.0.1.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_06_20_223744_project_student_pivot.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_05_29_114617_add_poloymorphic_relation_user.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/.env.local.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/server.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/company/show.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/helpers.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/controllers/ProjectController.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/project/list.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/project/show.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/company/list.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/user/signup.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/user/signin.blade.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/user/edit.blade.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/project/edit.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/routes.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/project/show.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/controllers/CompanyController.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/public/less/3ENIB.less",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/project/create.blade.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/layouts/main.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/company/show.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/emails/auth/reminder.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/emails/account/verification_student.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/emails/account/verification_company.blade.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/controllers/UserController.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/public/js/custom.js",
+		"/F/__DATA__/__programming__/__php__/3ENIB/composer.json",
+		"/F/__DATA__/__programming__/__php__/3ENIB/public/less/3ENIB.less",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/controllers/DocumentController.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/controllers/ProjectController.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/PivotStudentProject.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/storage/views/5418065ce23a3ef577423b280c5f11c2",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/storage/views/505d1a12b3bea96e716f4bc0fdb4fab6",
+		"/F/__DATA__/__programming__/__php__/3ENIB/public/js/tinyMCE_fr_FR.js",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/start/global.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/controllers/CompanyController.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/routes.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/Project.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/Student.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/public/robots.txt",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/production.sqlite",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/Post.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/controllers/PostController.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_06_15_095516_backup-message.php",
+		"/F/__DATA__/__programming__/__php__/3ENIB/public/css/3ENIB.css",
 		"/C/Users/Noa/AppData/Roaming/Sublime Text 3/Packages/User/LiveReload.sublime-settings",
 		"/C/Users/Noa/AppData/Roaming/Sublime Text 3/Packages/LiveReload/LiveReload.sublime-settings",
 		"/F/__DATA__/__programming__/__php__/3ENIB/public/css/bootstrap.css",
 		"/F/__DATA__/__programming__/__php__/3ENIB/bootstrap/test",
 		"/F/__DATA__/__programming__/__php__/3ENIB/3enib.sublime-project",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/Project.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/company/list.blade.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/Company.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/User.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/Student.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/errors/403.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/start/global.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/errors/500.blade.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/errors/default.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/user/signup.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/controllers/UserController.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/.env.local.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/config/mail.php",
 		"/C/wamp/logs/apache_error.log",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/errors/404.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/emails/account/verification_company.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/emails/account/verification_student.blade.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/user/signin.blade.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/emails/account/verification.blade.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/public/.htaccess",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/views/home.blade.php",
@@ -590,7 +630,6 @@
 		"/C/Users/Noa/Desktop/3enib.bat",
 		"/C/Program Files (x86)/cmder/vendor/3enib.bat",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_06_01_150658_timestamps_students_companies.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/composer.json",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/validators.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/filters.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_06_01_123802_remember_token_user.php",
@@ -609,7 +648,6 @@
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_05_29_142727_add_admin_flag.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_05_29_141401_change_table_name_finishing_with_y.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_05_29_133001_remove_useless_field_user_student.php",
-		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_05_29_114617_add_poloymorphic_relation_user.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/database/migrations/2014_05_29_110518_create-users-table.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/project.php",
 		"/F/__DATA__/__programming__/__php__/3ENIB/app/models/company.php",
@@ -656,22 +694,7 @@
 		"/C/Users/Noa/AppData/Local/Temp/scp21832/etc/ssl/localcerts/server.key",
 		"/C/Users/Noa/AppData/Local/Temp/scp43310/etc/apache2/sites-available-fcgi/roundcube",
 		"/C/Users/Noa/AppData/Local/Temp/scp40994/etc/apache2/ports.conf",
-		"/C/Users/Noa/AppData/Local/Temp/scp43211/etc/apache2/mods-enabled/ssl.conf",
-		"/C/Users/Noa/AppData/Local/Temp/scp39483/etc/apache2/apache2.conf",
-		"/C/Users/Noa/Desktop/bbox_country.txt",
-		"/C/Users/Noa/Desktop/main.py",
-		"/C/Users/Noa/AppData/Local/Temp/scp19767/var/resamap_prod/trunk/Web_django/resamap/templates/index.html",
-		"/C/Users/Noa/AppData/Local/Temp/scp22413/var/resamap_prod/trunk/Web_django/resamap/templates/resamap/cities.html",
-		"/C/Users/Noa/AppData/Local/Temp/scp21636/var/resamap_prod/trunk/Web_django/resamap/views.py",
-		"/C/Users/Noa/AppData/Local/Temp/scp20434/var/resamap_prod/trunk/Web_django/resamap/templates/resamap/base_home.html",
-		"/C/Users/Noa/AppData/Local/Temp/scp20964/var/resamap_prod/trunk/Web_django/resamap/templates/resamap/vip.html",
-		"/C/Users/Noa/AppData/Local/Temp/scp20033/var/resamap_prod/trunk/Web_django/resamap/templates/resamap/base.html",
-		"/C/Users/Noa/AppData/Local/Temp/scp21807/var/resamap_prod/trunk/Web_django/resamap/urls.py",
-		"/C/Users/Noa/AppData/Local/Temp/scp19687/var/www/index.html",
-		"/C/Users/Noa/AppData/Local/Temp/scp34049/etc/apache2/sites-available/test",
-		"/C/Users/Noa/AppData/Local/Temp/scp35851/var/resamap_dev/trunk/Web_django/resamap/wsgi.py",
-		"/C/Users/Noa/AppData/Local/Temp/scp57137/var/resamap_dev/trunk/Web_django/resamap/templates/resamap/forms.py",
-		"/C/Users/Noa/AppData/Local/Temp/scp25920/var/resamap_prod/trunk/Web_django/resamap/settings.py"
+		"/C/Users/Noa/AppData/Local/Temp/scp43211/etc/apache2/mods-enabled/ssl.conf"
 	],
 	"find":
 	{
@@ -682,6 +705,8 @@
 		"height": 89.0,
 		"where_history":
 		[
+			"F:\\__DATA__\\__programming__\\__php__\\3ENIB\\app\\views\\",
+			"F:\\__DATA__\\__programming__\\__php__\\3ENIB\\app",
 			"show.blade.php",
 			""
 		]
@@ -691,6 +716,25 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"{{{",
+			"}}}",
+			"}}",
+			"{{",
+			"textarea",
+			"light-textarea",
+			"texta",
+			"bmp",
+			"png",
+			"student",
+			"projectIsVisible",
+			"App::make(\"3enib_project\")->projectIsVisible",
+			"App::make(\"3enib_project\")->isVisible",
+			"App::make(\"3enib\")",
+			"Titres",
+			"head",
+			"headings",
+			"if",
+			"Dif",
 			"autho",
 			"noti",
 			"h2",
@@ -714,6 +758,10 @@
 		"regex": false,
 		"replace_history":
 		[
+			"{{",
+			"}}",
+			"}}}",
+			"{{{",
 			"h3",
 			"resamap_dev"
 		],
@@ -726,24 +774,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/models/Post.php",
+					"file": "/C/Windows/System32/drivers/etc/hosts",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 199,
+						"buffer_size": 914,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								191,
-								191
+								914,
+								914
 							]
 						],
 						"settings":
@@ -752,246 +800,13 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/PHP/PHP.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/views/project/show.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4746,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3752,
-								3752
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1067.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/controllers/ProjectController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2564,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								831,
-								831
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "public/js/custom.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 766,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								534,
-								534
-							]
-						],
-						"settings":
-						{
-							"SideBarAutoAddFoldersForOpenedFiles": 1,
-							"encoding_helper_encoding": "UTF-8",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/controllers/CompanyController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1546,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								55,
-								55
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 630.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "app/controllers/PostController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1848,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1035,
-								1035
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"incomplete_sync": null,
-							"open_with_edit": true,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "public/less/3ENIB.less",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 954,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								673,
-								673
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/LESS/LESS.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 575.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "app/views/layouts/main.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4443,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4388,
-								4388
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 900.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1051,6 +866,26 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"helpers",
+				"app\\helpers.php"
+			],
+			[
+				"hel",
+				"app\\helpers.php"
+			],
+			[
+				"hele",
+				"app\\helpers.php"
+			],
+			[
+				"routes",
+				"app\\routes.php"
+			],
+			[
+				"project",
+				"app\\controllers\\ProjectController.php"
+			]
 		],
 		"width": 0.0
 	},
@@ -1081,7 +916,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 279.0,
+	"side_bar_width": 575.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
