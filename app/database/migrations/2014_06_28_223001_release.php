@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Migration.0.1 extends Migration {
+class Release extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -16,13 +16,13 @@ class Migration.0.1 extends Migration {
 			$table->increments('id');
 			$table->string("name");
 			$table->text("description");
-			$table->string("photo_filepath");
+			$table->string("photo_filepath")->default("");
 			$table->text("contact");
-			$table->string("expertise");
-			$table->string("phone_number");
-			$table->string("SIRET");
-			$table->string("avatar_filepath");
-			$table->integer("user_id");
+			$table->string("expertise")->default("");
+			$table->string("phone_number")->default("&nbsp;");
+			$table->string("SIRET")->default("");
+			$table->string("avatar_filepath")->default("");
+			$table->integer("user_id")->default(0);
 			$table->timestamps();
 		});
 
@@ -44,18 +44,18 @@ class Migration.0.1 extends Migration {
 			$table->integer('project_id');
 			$table->integer("user_id");
 			$table->text("message");
-			$table->integer("state");
+			$table->integer("state")->default(1);
 			$table->timestamps();
 		});
 
 		Schema::create("projects", function($table){
 			$table->increments('id');
-			$table->string("name");
-			$table->string("required_skills");
+			$table->string("name")->default("");
+			$table->string("required_skills")->default("");
 			$table->integer('company_id');
 			$table->text("description");
-			$table->float("remuneration");
-			$table->string("estimated_time");
+			$table->float("remuneration")->default(0.0);
+			$table->string("estimated_time")->default("");
 			$table->integer("state");
 			$table->timestamps();
 		});
@@ -70,16 +70,16 @@ class Migration.0.1 extends Migration {
 
 		Schema::create("students", function($table){
 			$table->increments('id');
-			$table->string("lastname");
-			$table->string("firstname");
-			$table->string("speciality");
-			$table->string("photo_filepath");
-			$table->string("phone_number");
-			$table->string("avatar_filepath");
-			$table->string("cv_filepath");
+			$table->string("lastname")->default("");
+			$table->string("firstname")->default("");
+			$table->string("speciality")->default("");
+			$table->string("photo_filepath")->default("");
+			$table->string("phone_number")->default("");
+			$table->string("avatar_filepath")->default("");
+			$table->string("cv_filepath")->default("");
 			$table->text("description");
-			$table->string("RIB");
-			$table->integer("user_id");
+			$table->string("RIB")->default("");
+			$table->integer("user_id")->default(0);
 			$table->timestamps();
 		});
 
@@ -92,7 +92,7 @@ class Migration.0.1 extends Migration {
 			$table->timestamps();
 			$table->integer("admin")->default(0);
 			$table->string("hash_verification");
-			$table->string("remember_token");
+			$table->string("remember_token")->default("");
 			$table->integer("active")->default(1);
 		});
 	}

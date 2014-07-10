@@ -76,10 +76,10 @@ class UserController extends BaseController
 				}
 
 				$data_student = array(
-						"lastname"=>Input::get("lastname"),
-						"firstname"=>Input::get("firstname"),
-						"phone_number"=>Input::get("phone_number"),
-						"description"=>Input::get("description"),
+						"lastname"=>Input::get("lastname", ""),
+						"firstname"=>Input::get("firstname", ""),
+						"phone_number"=>Input::get("phone_number", ""),
+						"description"=>Input::get("description", ""),
 						"speciality"=>$speciality
 					);
 

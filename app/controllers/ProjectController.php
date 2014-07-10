@@ -67,7 +67,7 @@ class ProjectController extends BaseController {
 		if($validation->fails())
 		{
 			Session::set("headerTitle", "Edition");
-			return Redirect::to("project/edit/".$id)
+			return Redirect::to("project/create/".Input::get("company_id"))
 				->withErrors($validation)
 				->withInput();
 		}
