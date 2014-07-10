@@ -17,7 +17,7 @@ class DocumentController extends BaseController
 
 		$path = storage_path()."/uploads/".$id."/avatar/".$name;
 		if (!file_exists($path))
-			$path=storage_path()."/uploads/0/avatar/placeholder"
+			$path=storage_path()."/uploads/0/avatar/placeholder";
 		$contents = file_get_contents($path);
 		$statusCode = "200 OK";
 		$response = Response::make($contents, $statusCode);
