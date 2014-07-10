@@ -12,7 +12,7 @@ class DocumentController extends BaseController
 	}
 
 
-	public function getAvatar($id, $name)
+	public function getAvatar($id, $name="")
 	{
 
 		$path = storage_path()."/uploads/".$id."/avatar/".$name;
