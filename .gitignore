@@ -9,6 +9,7 @@ composer.lock
 Thumbs.db
 
 app/storage/uploads/
+!app/storage/uploads/0/
 3enib.sublime-workspace
 app/database/migrations/2014_06_20_223744_project_student_pivot.php
 bootstrap/start.php
