@@ -16,7 +16,7 @@ class ProjectController extends BaseController {
 	public function getList()
 	{
 		$projects = Project::orderBy("company_id", "ASC")->orderBy("state")->get();
-		Session::set("headerTitle", "List des projets");
+		Session::set("headerTitle", "Liste des projets");
 		return View::make("project.list", compact("projects"));
 	}
 

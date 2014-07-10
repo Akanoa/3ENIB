@@ -74,11 +74,11 @@ class Release extends Migration {
 			$table->string("firstname")->default("");
 			$table->string("speciality")->default("");
 			$table->string("photo_filepath")->default("");
-			$table->string("phone_number")->default("");
+			$table->string("phone_number")->default("&nbsp;");
 			$table->string("avatar_filepath")->default("");
 			$table->string("cv_filepath")->default("");
 			$table->text("description");
-			$table->string("RIB")->default("");
+			$table->string("RIB")->default("&nbsp;");
 			$table->integer("user_id")->default(0);
 			$table->timestamps();
 		});

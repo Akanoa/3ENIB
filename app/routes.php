@@ -21,4 +21,5 @@ Route::controller('project', 'ProjectController');
 Route::controller('post', 'PostController');
 Route::controller('user', 'UserController');
 Route::controller('document', 'DocumentController');
+Route::controller('student', 'StudentController');
 // Route::controller('password', 'RemindersController');

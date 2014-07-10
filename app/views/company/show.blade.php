@@ -25,7 +25,6 @@
 						<span class="glyphicon glyphicon-home"></span>
 					</div>
 					<div class="col-md-11">
-						<!-- <p>{{str_replace("‧", "<br/>", $company->contact)}}</p> -->
 						<p>{{nl2br(App::make("3enib_text")->filterText($company->contact))}}</p>
 					</div>
 

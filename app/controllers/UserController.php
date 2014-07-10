@@ -97,7 +97,7 @@ class UserController extends BaseController
 
 				$user_id = DB::table('users')->insertGetId($data_user);
 
-				Student::find($id_student)->update(["user_id"=>$user_id]);
+				Student::where("id", "=", $id_student)->update(["user_id"=>$user_id]);
 
 				if(Input::hasFile("avatar"))
 				{
