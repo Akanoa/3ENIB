@@ -26,10 +26,12 @@ class DocumentController extends BaseController
 		
 	}
 
-	public function getLogo($id, $name)
+	public function getLogo($id, $name="")
 	{
 
 		$path = storage_path()."/uploads/".$id."/logo/".$name;
+		if (!file_exists($path))
+			$path=storage_path()."/uploads/0/avatar/placeholder";
 		$contents = file_get_contents($path);
 		$statusCode = "200 OK";
 		$response = Response::make($contents, $statusCode);
@@ -38,16 +40,28 @@ class DocumentController extends BaseController
 
 	}
 
-	public function getPdf($id, $name)
+	public function getPdf($id, $type, $name="")
 	{
-		if(Auth::check() and Auth::user()->own_type == "student")
+		if($type=="cv")
 		{
-			$path = storage_path()."/uploads/".$id."/pdf/".$name;
+			if(!App::make("3enib_authz")->isAdmin())
+			{
+				return Redirect::to('/')->with('notifications_errors', ["Vous n'êtes pas autorisé à accéder à cette ressource!"]);
+			}
+		}
+
+		$path = storage_path()."/uploads/".$id."/pdf/".$name;
+		if(file_exists($path))
+		{
 			$contents = file_get_contents($path);
 			$statusCode = "200 OK";
 			$response = Response::make($contents, $statusCode);
 			$response->header('Content-Type', 'application/pdf');
 			return $response;
+		}
+		else
+		{
+			return Redirect::to('/')->with('notifications_errors', ["Ce fichier n'existe pas!"]);
 		}
 
 	}

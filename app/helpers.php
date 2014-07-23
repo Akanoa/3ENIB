@@ -159,6 +159,20 @@ class _3ENIB_User
 			return $user->own->name;
 		}
 	}
+
+	public function userIsActive($user)
+	{
+		if($user->user->active)
+			return true;
+		return false;
+	}
+
+	public function userStatus($user)
+	{
+		if($user->user->active)
+			return "Actif";
+		return "Bloqué";
+	}
 }
 
 class _3ENIB_Text

@@ -113,10 +113,12 @@ class ProjectController extends BaseController {
 		}
 
 		$students = [];
+
 		foreach($project->students()->get() as $student)
 		{	
 			
 			array_push($students, [$student, PivotStudentProject::where("student_id", "=", $student->id)->where("project_id", "=", $project->id)->get()[0]->student_state]);
+
 		}
 
 

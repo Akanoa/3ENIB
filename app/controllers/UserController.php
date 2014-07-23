@@ -5,7 +5,7 @@ class UserController extends BaseController
 
 	public function __construct()
 	{
-		$this->beforeFilter('auth', array('only' => array('signout', 'edit')));
+		$this->beforeFilter('auth', array('only' => array('signout', 'edit', 'ban', 'unban')));
 		$this->beforeFilter('csrf', array('on' => 'post'));
 	}
 
@@ -61,7 +61,8 @@ class UserController extends BaseController
 				Session::set("headerTitle", "Se connecter");
 				return Redirect::to("user/signup")
 					->withErrors($validation)
-					->withInput();
+					->withInput()
+					->with("signup-type", "student");
 			}
 			else
 			{
@@ -78,7 +79,7 @@ class UserController extends BaseController
 				$data_student = array(
 						"lastname"=>Input::get("lastname", ""),
 						"firstname"=>Input::get("firstname", ""),
-						"phone_number"=>Input::get("phone_number", ""),
+						"phone_number"=>Input::get("phone_number", "&nbsp;"),
 						"description"=>Input::get("description", ""),
 						"speciality"=>$speciality
 					);
@@ -165,9 +166,11 @@ class UserController extends BaseController
 			$validation = Validator::make(Input::all(), $rules);
 
 			if($validation->fails()){
+				Session::set("headerTitle", "Se connecter");
 				return Redirect::to("user/signup")
 					->withErrors($validation)
-					->withInput();
+					->withInput()
+					->with("signup-type", "company");
 			}
 			else
 			{
@@ -177,7 +180,7 @@ class UserController extends BaseController
 				$data_company = array(
 						"name"=>Input::get("name"),
 						"siret"=>Input::get("siret"),
-						"phone_number"=>Input::get("phone_number"),
+						"phone_number"=>Input::get("phone_number", "&nbsp;"),
 						"contact"=>Input::get("contact"),
 						"expertise"=>Input::get("expertise"),
 						"description"=>Input::get("description"),
@@ -506,7 +509,7 @@ class UserController extends BaseController
 
 				User::where("id",'=',$user_id)->update($data_user);
 
-				if(Input::hasFile("avatar"))
+				if(Input::all()["avatar"]!=null)
 				{
 					$avatar = Input::file("avatar");
 					$hash_avatar = md5($avatar->getClientOriginalName());
@@ -517,7 +520,7 @@ class UserController extends BaseController
 					$student->save();
 				}
 
-				if(Input::hasFile("photo"))
+				if(Input::all()["photo"]!=null)
 				{
 					$photo = Input::file("photo");
 					$hash_photo = md5($photo->getClientOriginalName());
@@ -528,12 +531,13 @@ class UserController extends BaseController
 					$student->save();
 				}
 
-				if(Input::hasFile("cv"))
+
+				if(Input::all()["cv"]!=null)
 				{
 					$cv = Input::file("cv");
 					$hash_cv = md5($cv->getClientOriginalName());
-					$filepath = "/uploads/".$user_id."/cv/".$hash_cv;
-					$cv->move(storage_path()."/uploads/".$user_id."/cv/", md5($cv->getClientOriginalName()));
+					$filepath = "/uploads/".$user_id."/pdf/".$hash_cv;
+					$cv->move(storage_path()."/uploads/".$user_id."/pdf/", md5($cv->getClientOriginalName()));
 					$student = User::find($user_id)->own;
 					$student->cv_filepath = $hash_cv;
 					$student->save();
@@ -585,7 +589,7 @@ class UserController extends BaseController
 
 				User::where("id",'=',$user_id)->update($data_user);
 
-				if(Input::hasFile("avatar"))
+				if(Input::all()["avatar"]!=null)
 				{
 					$avatar = Input::file("avatar");
 					$hash_avatar = md5($avatar->getClientOriginalName());
@@ -596,7 +600,7 @@ class UserController extends BaseController
 					$company->save();
 				}
 
-				if(Input::hasFile("logo"))
+				if(Input::all()["logo"]!=null)
 				{
 					$logo = Input::file("logo");
 					$hash_logo = md5($logo->getClientOriginalName());
@@ -614,5 +618,82 @@ class UserController extends BaseController
 		return Redirect::to("/user/edit")
 			->with("notifications_infos", $infos);
 
+	}
+
+	public function postUnban()
+	{
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			return Redirect::to("/user/list")
+				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire cela"]);
+		}
+
+		$user_id = Input::get("user_id", 0);
+
+		if($user_id == 0)
+		{
+			return Redirect::to("/user/list")
+				->with("notifications_errors", ["L'utilisateur n'existe pas"]);
+		}
+
+		$user = User::find($user_id);
+
+		$user->active = 1;
+
+		$user->save();
+
+
+		if($user->own_type == "student")
+		{
+			$location = "student/list";
+			$name = $user->own->firstname." ".$user->own->lastname;
+		}
+		else
+		{
+			$location = "company";
+			$name = $user->own->name;
+		}
+
+		return Redirect::to($location)
+			->with("notifications_infos", ["L'utilisateur $name n'est plus banni"]);
+
+
+	}
+
+	public function postBan()
+	{
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			return Redirect::to("/")
+				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire cela"]);
+		}
+
+		$user_id = Input::get("user_id", 0);
+
+		if($user_id == 0)
+		{
+			return Redirect::to("/")
+				->with("notifications_errors", ["L'utilisateur n'existe pas"]);
+		}
+
+		$user = User::find($user_id);
+
+		$user->active = 0;
+
+		$user->save();
+
+		if($user->own_type == "student")
+		{
+			$location = "student/list";
+			$name = $user->own->firstname." ".$user->own->lastname;
+		}
+		else
+		{
+			$location = "company";
+			$name = $user->own->name;
+		}
+
+		return Redirect::to($location)
+			->with("notifications_infos", ["L'utilisateur <b>$name</b> est banni"]);
 	}
 }

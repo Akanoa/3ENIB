@@ -1,3 +1,19 @@
+// function companyToStudent(){
+// 	$("#signup-company").fadeOut();
+// 	$("#signup-student").fadeIn();
+// 	$("#company-subscription").attr("checked",false);
+// 	$("#student-subscription").attr("checked",true);
+
+// };
+
+// function studentToCompany(){
+// 	$("#signup-company").fadeIn();
+// 	$("#signup-student").fadeOut();
+// 	$("#company-subscription").attr("checked",true);
+// 	$("#student-subscription").attr("checked",false);
+// };
+
+
 (function ( $ ) {
 	$("#signup-company").fadeOut();
 	$("#student-subscription").change(function(){

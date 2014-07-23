@@ -6,6 +6,11 @@
 
   <!-- Form Name -->
   <legend>Inscription</legend>
+<!--   @if(Session::has("signup-type"))
+  {{Session::get("signup-type")}}
+  @else
+  pas de type
+  @endif -->
 
   <!-- Multiple Radios -->
   <div class="form-group">
@@ -28,7 +33,6 @@
 
   </fieldset>
   </form>
-
 
 <div id="signup-student">
   {{Form::open(['url' => 'user/signup', 'method' => 'post', 'class'=>'form-horizontal well', 'files'=>true])}}
@@ -208,7 +212,7 @@
     <div class="col-md-4">
     {{Form::text("expertise", "",array("placeholder"=>"Mots clefs décrivant votre secteur d'activité", "class"=>"form-control input-md"))}}
     </div>
-      {{$errors->first("password_confirmation", '<span class="help-block">:message</span>')}}
+      {{$errors->first("expertise", '<span class="help-block">:message</span>')}}
   </div>
 
   <!-- Avatar -->
@@ -235,6 +239,7 @@
     <div class="col-md-4">
       {{ Form::textarea('contact',null, ['placeholder'=>"Où vous contacter", "rows"=>3,'class' => 'form-control light-textarea']) }}
     </div>
+    {{$errors->first("contact", '<span class="help-block">:message</span>')}}
   </div>
 
   <!-- Text input-->
@@ -252,7 +257,7 @@
     <div class="col-md-4">
     {{Form::text("siret", "",array("placeholder"=>"Votre SIRET", "class"=>"form-control input-md"))}}
     </div>
-      {{$errors->first("password_confirmation", '<span class="help-block">:message</span>')}}
+      {{$errors->first("siret", '<span class="help-block">:message</span>')}}
   </div>
 
 
@@ -275,4 +280,19 @@
   </fieldset>
   {{Form::close()}}
 </div>
+    
+@endsection
+
+
+@section("scripts")
+  @if(Session::has("signup-type"))
+    @if(Session::get("signup-type")=="company")
+      <script type="text/javascript">
+       $("#signup-company").fadeIn();
+       $("#signup-student").fadeOut();
+       $("#company-subscription").attr("checked",true);
+       $("#student-subscription").attr("checked",false);
+      </script>
+    @endif
+  @endif
 @endsection

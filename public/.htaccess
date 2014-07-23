@@ -2,7 +2,7 @@
     Options -MultiViews -Indexes
     RewriteEngine On
 
-    RewriteBase /3ENIB
+    RewriteBase /
     
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f

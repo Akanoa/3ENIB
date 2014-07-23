@@ -22,7 +22,6 @@
         <style>
 
         </style>
-
     </head>
 
     <body role="document">
@@ -36,7 +35,7 @@
                     <li><a href="{{URL::to('company')}}">Entreprises</a></li>
                     <li><a href="{{URL::to('project/list')}}">Projets</a></li>
                     @if (App::make("3enib_authz")->isAdmin())
-                        <li><a href="#contact">Étudiants</a></li>
+                        <li><a href="{{URL::to('student/list')}}">Étudiants</a></li>
                     @endif
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -103,10 +102,14 @@
         @yield("content")
     </div>
     </body>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
     {{HTML::script("js/bootstrap.min.js")}}
     {{HTML::script("js/custom.js")}}
     {{HTML::script("js/filestyle.js")}}
     {{HTML::script("js/tinyMCE_fr_FR.js")}}
+
+    @yield("scripts")
+
 </html>

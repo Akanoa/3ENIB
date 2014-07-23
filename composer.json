@@ -7,10 +7,12 @@
 		"laravel/framework": "4.1.*",
 		 "doctrine/dbal": "~2.3",
 		 "caouecs/laravel4-lang": "dev-master",
-		 "cviebrock/image-validator": "1.0.*"
+		 "cviebrock/image-validator": "1.0.*",
+		 "teepluss/hmvc": "dev-master"
 	},
 	"require-dev": {
-		"way/generators": "2.*"
+		"way/generators": "2.*",
+		"barryvdh/laravel-debugbar": "1.*"
 	},
 	"autoload": {
 		"classmap": [

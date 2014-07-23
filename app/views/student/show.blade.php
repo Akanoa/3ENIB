@@ -34,24 +34,37 @@
 			<div class="col-md-11">
 				<p><b>IBAN</b>: {{{$student->RIB}}}</p>
 			</div>
+
+			<div class="col-md-1">
+				<span class="glyphicon glyphicon-user"></span>
+			</div>
+			<div class="col-md-11">
+				<a href="{{URL::to('document/pdf')}}/{{$student->id}}/cv/{{$student->cv_filepath}}">CV</a>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-12">
-		<h2>Son CV</h2>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-	</div>
+
 	<div class="col-md-12">
 		<h2>Ses spécialités</h2>
-		{{{$student->speciality}}}
+		@if($student->speciality!="")
+			{{{$student->speciality}}}
+		@else
+			pas de spécialités
+		@endif
 	</div>
 		<div class="col-md-12">
 		<h2>Ses projets</h2>
-		
+		@if(count($projects)==0)
+			pas de projets
+		@else
+			<ul>
+				@foreach($projects as $project)
+					<li>
+						<a href="{{URL::to('project/show')}}/{{$project->id}}">{{$project->name}}</a>
+					</li>
+				@endforeach
+			</ul>
+		@endif
 	</div>
 </div>
 

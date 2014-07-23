@@ -3,6 +3,8 @@
 use Illuminate\Auth\UserInterface;
 
 class User extends Eloquent implements UserInterface{
+
+	protected $fillable = ["*"];
 	
 	public function own(){
 		return $this->morphTo();

@@ -56,7 +56,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => '3ENIB',
-			'username'  => '3enib_admin',
+			'username'  => '3enib',
 			'password'  => $_ENV['MySQL_passwd'],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
