@@ -30,6 +30,8 @@ class Release extends Migration {
 			$table->increments('id');
 			$table->string("path");
 			$table->string("name");
+			$table->integer("project_id")->default(0);
+			$table->integer("visibility")->default(0);
 			$table->timestamps();
 		});
 

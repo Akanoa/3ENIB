@@ -123,10 +123,11 @@ class ProjectController extends BaseController {
 
 
 		$posts = Post::where("project_id", "=", $id)->where("state", "=", 1)->get();
-		$files = [];
+		$files = Document::where("project_id", "=", $id)->get();
 		$auth = Auth::check();
+		$allow_to_remove_docs = Auth::check()?Auth::user()->id==$project->company->user->id or Auth::user()->admin==1:false;
 		Session::set("headerTitle", "Entreprise | ".$project->company->name);
-		return View::make("project.show", compact("project", "posts", "files", "auth", "students"));
+		return View::make("project.show", compact("project", "posts", "files", "auth", "students", "allow_to_remove_docs"));
 	}
 
 
@@ -358,6 +359,98 @@ class ProjectController extends BaseController {
 		Session::set("headerTitle", "Projet | Liste des projets");
 		return Redirect::to("project/show/".$project->id)
 				->with("notifications_success", ["L'étudiant <b>".$student->firstname." ".$student->lastname." </b> est maintenant inclus dans le projet ".$project->name]);
+	}
+
+	public function getAddDocument($user_id, $project_id=0)
+	{
+
+		if((Auth::user()->id != $user_id and !App::make("3enib_authz")->isAdmin()) or $project_id==0)
+		{
+			if ($project_id == 0)
+			{
+				return  Redirect::to("/")
+					->with("notifications_errors", "Le projet n'existe pas");
+			}
+			else
+			{
+				return Redirect::to("project/show/$project_id")
+					->with("notifications_errors", "Vous n'êtes pas autorisé à faire ça");
+			}
+
+		}
+
+		return View::make("project.adddocument", compact("user_id", "project_id"));
+	}
+
+	public function postAddDocument()
+	{
+		$user_id    = intval(Input::get("user_id")?:0);
+		$project_id = intval(Input::get("project_id")?:0);
+		$project    = Project::find($project_id);
+
+
+
+		if((Auth::user()->id != $user_id and !App::make("3enib_authz")->isAdmin()) or $project_id==0)
+		{
+			if ($project_id == 0)
+			{
+				return  Redirect::to("/")
+					->with("notifications_errors", ["Le projet n'existe pas"]);
+			}
+			else
+			{
+
+				return Redirect::to("project/show/$project_id")
+					->with("notifications_errors", ["Vous n'êtes pas autorisé à faire ça"]);
+			}
+
+		}
+
+		$documents = Input::file("document");
+		$names     = Input::get("name");
+		$privates  = Input::get("private");
+
+		if($documents[0]!=NULL)
+		{
+			$i=0;
+			$errors = [];
+			$infos  = [];
+
+			foreach ($documents as $document) 
+			{
+				
+				if($document->getMimeType()!="application/pdf")
+				{
+					array_push($errors, "Le document <b>$names[$i]</b> doit-être au format pdf");
+					$i++;
+					continue;
+				}
+
+				$data = [
+					"project_id"=>$project_id,
+					"name"=>$names[$i],
+					"path"=>md5(time().$document->getClientOriginalName()),
+					"visibility"=>isset($privates[$i])?0:1
+				];
+
+				Document::create($data);
+
+				$document->move(storage_path()."/uploads/".$user_id."/pdf/", $data["path"]);
+				array_push($infos, "Le document <b>$names[$i]</b> a été ajouté au projet <b>$project->name</b>");
+				$i++;
+			}
+
+
+			return Redirect::to("project/add-document/$user_id/$project_id")
+				->with("notifications_success", $infos)
+				->with("notifications_errors", $errors);
+		}
+		else
+		{
+			return Redirect::to("project/add-document/$user_id/$project_id")
+				->with("notifications_infos", ["Aucun document n'a été ajouté"]);	
+		}
+
 	}
 
 	/**

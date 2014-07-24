@@ -79,7 +79,7 @@ class UserController extends BaseController
 				$data_student = array(
 						"lastname"=>Input::get("lastname", ""),
 						"firstname"=>Input::get("firstname", ""),
-						"phone_number"=>Input::get("phone_number", "&nbsp;"),
+						"phone_number"=>Input::get("phone_number")!=""?:"&nbsp;",
 						"description"=>Input::get("description", ""),
 						"speciality"=>$speciality
 					);
@@ -180,11 +180,12 @@ class UserController extends BaseController
 				$data_company = array(
 						"name"=>Input::get("name"),
 						"siret"=>Input::get("siret"),
-						"phone_number"=>Input::get("phone_number", "&nbsp;"),
+						"phone_number"=>Input::get("phone_number")!=""?:"&nbsp;",
 						"contact"=>Input::get("contact"),
 						"expertise"=>Input::get("expertise"),
 						"description"=>Input::get("description"),
 					);
+
 
 				$id_company = DB::table('companies')->insertGetId($data_company);
 
@@ -642,20 +643,24 @@ class UserController extends BaseController
 
 		$user->save();
 
+		$final="";
 
 		if($user->own_type == "student")
 		{
 			$location = "student/list";
+			$own = "étudiant";
 			$name = $user->own->firstname." ".$user->own->lastname;
 		}
 		else
 		{
 			$location = "company";
+			$own = "entreprise";
 			$name = $user->own->name;
+			$final="e";
 		}
 
 		return Redirect::to($location)
-			->with("notifications_infos", ["L'utilisateur $name n'est plus banni"]);
+			->with("notifications_infos", ["L'$own <b>$name</b> n'est plus banni$final"]);
 
 
 	}
@@ -682,18 +687,23 @@ class UserController extends BaseController
 
 		$user->save();
 
+		$final="";
+
 		if($user->own_type == "student")
 		{
 			$location = "student/list";
+			$own = "étudiant";
 			$name = $user->own->firstname." ".$user->own->lastname;
 		}
 		else
 		{
 			$location = "company";
+			$own = "entreprise";
 			$name = $user->own->name;
+			$final="e";
 		}
 
 		return Redirect::to($location)
-			->with("notifications_infos", ["L'utilisateur <b>$name</b> est banni"]);
+			->with("notifications_infos", ["L'$own <b>$name</b> est banni$final"]);
 	}
 }

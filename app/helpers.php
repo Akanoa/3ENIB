@@ -93,6 +93,21 @@ class _3ENIB_Project
 
 		return $visible;
 	}
+
+	public function documentIsVisible($document, $project)
+	{
+		if($document->visibility==0 and Auth::check())
+		{
+			$owner = $project->company->user;
+			//if logged user isn't an admin or the document's owner 
+			if(Auth::user()->id!=$owner->id and Auth::user()->admin!=1)
+			{
+				if(!$this->studentHasBeenAcceptedOnProject($project))
+					return false;
+			}
+		}
+		return true;
+	}
 }
 
 class _3ENIB_Authz{

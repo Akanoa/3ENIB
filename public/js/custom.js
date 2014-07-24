@@ -1,18 +1,23 @@
-// function companyToStudent(){
-// 	$("#signup-company").fadeOut();
-// 	$("#signup-student").fadeIn();
-// 	$("#company-subscription").attr("checked",false);
-// 	$("#student-subscription").attr("checked",true);
 
-// };
+var document_added = 0;
 
-// function studentToCompany(){
-// 	$("#signup-company").fadeIn();
-// 	$("#signup-student").fadeOut();
-// 	$("#company-subscription").attr("checked",true);
-// 	$("#student-subscription").attr("checked",false);
-// };
+function removeDocument (element){
+	document_added--;
+	if($("#documents").children().length>1)
+			element.parentNode.parentNode.remove();
+	else
+		return false;
+	var documents = $("#documents").children();
 
+	var i = 0;
+
+	var inputs = $(".document .visibility input");
+	for (input in inputs)
+	{
+		inputs[input].name = "private["+i+"]";
+		i++;
+	}
+}
 
 (function ( $ ) {
 	$("#signup-company").fadeOut();
@@ -39,11 +44,20 @@
 		}
 	});
 
+	$(".remove-document").click(function(event) {
+		if (confirm('Voulez vous supprimer ce message?')) {
+			var val = $(this).parent()[0].href;
+			window.location.replace(val);
+		} 
+		else {
+		    return false;
+		}
+	});
+
 	$(".post-edit").fadeToggle();
 
 	$(".post-panel-edit").click(function(event){
 		var form = $(this).parent().parent().find("form").fadeToggle();
-		console.log("test");
 	});
 
 	tinymce.init({selector : '.post-edit-form',
@@ -65,6 +79,16 @@
 				  			  link \
 				  			  ",
 				});
+
+	$("#add-document").click(function(event){
+		document_added++;
+		$("#documents").append($(".document")[0].outerHTML);
+		var inputs = $("#documents .document:last-child .visibility input");
+		for (input in inputs)
+		{
+			inputs[input].name = "private["+document_added+"]";
+		}
+	});
 
 }( jQuery ));
 

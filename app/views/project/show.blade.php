@@ -4,6 +4,8 @@
 
 @if($project)
 
+<a href="{{URL::to('company')}}/{{$project->company->id}}" id="back-to-company">Retour à l'entreprise</a>
+
 <div class="row">
 	
 	<div class="col-md-12 text-center">
@@ -32,20 +34,32 @@
 
 	<div class="col-md-12">
 		<h3>Différents documents pouvant vous servir</h2>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		@if(App::make("3enib_authz")->isAdmin() or (App::make("3enib_authz")->isCompany() and Auth::user()->own->id==$project->company->id))
+			{{Form::open(["method"=>"GET", "url"=>"project/add-document/".$project->company->user->id."/".$project->id."/"])}}
+				{{ Form::submit('Ajouter un document', array('class' => 'btn btn-success')) }}
+			{{Form::close()}}
+		@endif
 		@if ($files)
+			<ul id="document-list">
 			@foreach ($files as $file)
-				{{$file->name}}
+				@if(App::make("3enib_project")->documentIsVisible($file, $project))
+					<li>
+						<a href="{{URL::to('document/pdf')}}/{{$project->company->user->id}}/pdf/{{$file->path}}">{{$file->name}}</a>
+						@if($allow_to_remove_docs)
+							&nbsp;
+							<a href="{{URL::to('document/delete')}}/{{$file->id}}/{{$project->id}}"><span class="glyphicon glyphicon-remove remove-document"></span></a>
+						@endif
+					</li>
+				@endif
 			@endforeach
+			</ul>
+		@else
+			<br>
+			Il n'y a pas de document disponible.
 		@endif
 	</div>
 	
-	@if($project->state == 1)
+	@if($project->state == 1 and App::make("3enib_authz")->isStudent())
 		<div class="col-md-12">
 			<h3>Se proposer sur le projet</h2>
 			@if (App::make("3enib_authz")->studentAllowedToSubscribeToProject($project))
@@ -165,13 +179,13 @@
 							@endif
 						</div>
 						<div class="col-md-1">
-							<img class="img-circle post-avatar" src="{{$_ENV['root_site']}}/document/avatar/{{$post->user_id}}/{{User::find($post->user_id)->own->avatar_filepath}}" alt="">
+							<img class="post-avatar" src="{{$_ENV['root_site']}}/document/avatar/{{$post->user_id}}/{{User::find($post->user_id)->own->avatar_filepath}}" title="{{$post->user->own->name}}">
 						</div>
 					</div> 
 				@else
 					<div class="row post">
 						<div class="col-md-1">
-							<img class="img-circle post-avatar" src="{{$_ENV['root_site']}}/document/avatar/{{$post->user_id}}/{{User::find($post->user_id)->own->avatar_filepath}}" alt="">
+							<img class="post-avatar" src="{{$_ENV['root_site']}}/document/avatar/{{$post->user_id}}/{{User::find($post->user_id)->own->avatar_filepath}}" title="{{$post->user->own->firstname}} {{$post->user->own->lastname}}">
 						</div>
 						<div class="col-md-11 post-message">
 							{{App::make("3enib_text")->filterText($post->message)}}

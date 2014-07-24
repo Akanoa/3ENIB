@@ -65,4 +65,27 @@ class DocumentController extends BaseController
 		}
 
 	}
+
+	public function getDelete($id, $project_id)
+	{
+		$document = Document::find($id);
+		$project = Project::find($project_id);
+		$user_id = $project->company->user->id;
+		if(Auth::user()->admin == 0 and Auth::user()->id != $user_id)
+		{
+			Session::set("headerTitle", "Entreprise | ".$project->company->name);
+			$infos = ["Vous n'êtes pas autorisé à supprimer ce document"];
+			return Redirect::to('project/show/'.$post->project_id)
+				->with("notifications_errors", $infos);
+		}
+		else
+		{
+			File::delete(storage_path()."/uploads/".$user_id."/pdf/".$document->path);
+			$document->delete();
+			Session::set("headerTitle", "Entreprise | ".$project->company->name);
+			$infos = ["Document supprimé"];
+			return Redirect::to('project/show/'.$project_id)
+				->with("notifications_success", $infos);
+		}
+	}
 }

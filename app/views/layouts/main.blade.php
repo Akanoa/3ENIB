@@ -41,14 +41,13 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if(!Auth::guest())
                         <li>
-                            <img class="navbar-brand img-circle" src="{{$_ENV['root_site']}}/document/avatar/{{Auth::user()->id}}/{{Auth::user()->own->avatar_filepath}}" alt="">
+                            <img class="navbar-brand" src="{{$_ENV['root_site']}}/document/avatar/{{Auth::user()->id}}/{{Auth::user()->own->avatar_filepath}}" alt="">
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{App::make("3enib_user")->formatedUserName()}}<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 @if(Auth::user()->own_type == "company")
                                     <li><a href="{{URL::to('company')}}/{{Auth::user()->own->id}}">Accéder à mon entreprise</a></li>
-                                    <li><a href="#">Something else here</a></li>
                                 @endif
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Mon profil</li>
