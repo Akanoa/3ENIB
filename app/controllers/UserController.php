@@ -384,12 +384,20 @@ class UserController extends BaseController
 	 *
 	 * @return Response
 	 */
-	 public function getEdit()
+	 public function getEdit($user_id=0)
 	 {
 	 	if(Auth::check())
 	 	{
+	 		if(App::make("3enib_authz")->isAdmin() and $user_id!=0)
+	 		{
+	 			$user = User::find($user_id);
+	 		}
+	 		else
+	 		{
+	 			$user = Auth::user(); 
+	 		}
 			Session::set("headerTitle", "Edition");
-			$type = Auth::user()->own_type;
+			$type = $user->own_type;
 
 			if($type == "student")
 			{
@@ -399,7 +407,6 @@ class UserController extends BaseController
 					"Électronique"
 				];
 
-				$user = Auth::user();
 
 				$datas = [
 					"lastname" => $user->own->lastname,
@@ -409,12 +416,11 @@ class UserController extends BaseController
 					"description" => $user->own->description
 				];
 
-				return View::make("user.edit", compact("type", "studentSpecialities", "datas"));
+				return View::make("user.edit", compact("user", "studentSpecialities", "datas"));
 				
 			}
 			else if($type == "company")
 			{
-				$user = Auth::user();
 
 				$datas = [
 					"name" => $user->own->name,
@@ -426,7 +432,7 @@ class UserController extends BaseController
 					"contact" => $user->own->contact
 				];
 
-				return View::make("user.edit", compact("type", "studentSpecialities", "datas"));
+				return View::make("user.edit", compact("user", "datas"));
 			}
 	 	}
 	 	else
@@ -448,6 +454,19 @@ class UserController extends BaseController
 			Session::set("headerTitle", "Accueil");
 			return Redirect::to("/");
 		}
+
+		$admin = App::make("3enib_authz")->isAdmin();
+
+		if($admin)
+		{
+			$user_id = Input::get("user_id");
+			$user = User::find($user_id);
+		}
+		else
+		{
+			$user = Auth::user();
+			$user_id = $user->id;
+		}	
 
 		if(Input::get("subscription_type")=="student")
 		{
@@ -495,9 +514,8 @@ class UserController extends BaseController
 					$data_student["speciality"] = $speciality;
 				}
 
-				$user_id = Auth::user()->id;
 
-				Student::where("id", '=', Auth::user()->own->id)->update($data_student);
+				Student::where("id", '=', $user->own->id)->update($data_student);
 
 				$data_user = array(
 						"email"=> Input::get("email"),
@@ -576,9 +594,8 @@ class UserController extends BaseController
 						"description"=>Input::get("description"),
 					);
 
-				$user_id = Auth::user()->id;
 
-				Company::where("id", '=', Auth::user()->own->id)->update($data_company);
+				Company::where("id", '=', $user->own->id)->update($data_company);
 
 				$data_user = array(
 						"email"=> Input::get("email"),
@@ -616,8 +633,17 @@ class UserController extends BaseController
 		
 		Session::set("headerTitle", "edition");
 		$infos = ["Votre profil à été édité."];
-		return Redirect::to("/user/edit")
-			->with("notifications_infos", $infos);
+
+		if($admin)
+		{
+			return Redirect::to("/user/edit/".$user_id)
+				->with("notifications_infos", $infos);
+		}
+		else
+		{
+			return Redirect::to("/user/edit")
+				->with("notifications_infos", $infos);
+		}		
 
 	}
 

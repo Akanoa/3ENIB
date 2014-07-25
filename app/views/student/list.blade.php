@@ -25,13 +25,18 @@
 									{{Form::close()}}
 								</div>	
 							@else
-								<div class="col-md-4">
+								<div class="col-md-6">
 									{{Form::open(["method"=>"POST", "url"=>"user/ban"])}}
 										{{Form::hidden("user_id", $student->user->id)}}
 										{{ Form::submit('Bannir l\'étudiant', array('class' => 'btn btn-danger')) }}
 									{{Form::close()}}
 								</div>			
 							@endif
+								<div class="col-md-6">
+									{{Form::open(["method"=>"GET", "url"=>"user/edit/".$student->user->id])}}
+										{{ Form::submit('Modifier l\'étudiant', array('class' => 'btn btn-info')) }}
+									{{Form::close()}}
+								</div>	
 						</div>
 					</td>
 				@endif

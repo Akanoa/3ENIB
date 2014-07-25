@@ -25,20 +25,25 @@
 			@if(App::make("3enib_authz")->isAdmin())
 				<div class="row">
 					@if(!App::make("3enib_user")->userIsActive($company))
-						<div class="col-md-4">
+						<div class="col-md-3">
 							{{Form::open(["method"=>"POST", "url"=>"user/unban"])}}
 								{{Form::hidden("user_id", $company->user->id)}}
 								{{ Form::submit('Débannir l\'entreprise', array('class' => 'btn btn-warning')) }}
 							{{Form::close()}}
 						</div>	
 					@else
-						<div class="col-md-4">
+						<div class="col-md-3">
 							{{Form::open(["method"=>"POST", "url"=>"user/ban"])}}
 								{{Form::hidden("user_id", $company->user->id)}}
 								{{ Form::submit('Bannir l\'entreprise', array('class' => 'btn btn-danger')) }}
 							{{Form::close()}}
 						</div>			
 					@endif
+					<div class="col-md-3">
+						{{Form::open(["method"=>"GET", "url"=>"user/edit/".$company->user->id])}}
+							{{ Form::submit('Modifier l\'entreprise', array('class' => 'btn btn-info')) }}
+						{{Form::close()}}
+					</div>		
 				</div>
 			@endif
 

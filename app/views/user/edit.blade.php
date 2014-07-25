@@ -3,11 +3,12 @@
 @section('content')
 
 
-  @if($type=="student")
+  @if($user->own_type=="student")
     <div id="edit-student">
       {{Form::open(['url' => 'user/edit', 'method' => 'post', 'class'=>'form-horizontal well', 'files'=>true])}}
 
       {{Form::hidden("subscription_type", "student")}}
+      {{Form::hidden("user_id", $user->id)}}
       <fieldset>
 
       <!-- Form Name -->
@@ -130,11 +131,12 @@
       </fieldset>
       {{Form::close()}}
     </div>
-  @elseif($type=="company")
+  @elseif($user->own_type=="company")
     <div id="edit-company">
       {{Form::open(['url' => 'user/edit', 'method' => 'post', 'class'=>'form-horizontal well', 'files'=>true])}}
 
       {{Form::hidden("subscription_type", "company")}}
+      {{Form::hidden("user_id", $user->id)}}
       <fieldset>
 
       <!-- Form Name -->
