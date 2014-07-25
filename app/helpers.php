@@ -250,7 +250,7 @@ class _3ENIB_Notification{
 		$data =[
 			"recipient_id"=>$recipient_id,
 			"text"=>"Votre candidature a été accepté sur le projet $project->name",
-			"link_to"=>URL::to('#')
+			"link_to"=>URL::to('project/show')."/".$project->id
 		];
 
 		Notification::create($data);
@@ -261,7 +261,7 @@ class _3ENIB_Notification{
 		$data =[
 			"recipient_id"=>$project->company->user->id,
 			"text"=>"Le projet $project->name a été accepté",
-			"link_to"=>URL::to('#')
+			"link_to"=>URL::to('project/show')."/".$project->id
 		];
 
 		Notification::create($data);
