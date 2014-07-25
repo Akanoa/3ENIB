@@ -222,7 +222,7 @@ class ProjectController extends BaseController {
 
 		$project->students()->attach($student_id);
 
-		App::make("3enib_notification")->studentAppliesToProject(Student::find($student_id), $project, 1);
+		App::make("3enib_notification")->studentAppliesToProject(Student::find($student_id), $project);
 
 		Session::set("headerTitle", "Projet | ".Project::find($project_id)->name);
 		return Redirect::to("project/show/".$project_id);
@@ -283,6 +283,9 @@ class ProjectController extends BaseController {
 		$project = Project::find($project_id);
 		$project->state = 2;
 		$project->save();
+
+		App::make("3enib_notification")->launchProject($project);
+
 		Session::set("headerTitle", "Projet | Liste des projets");
 		return Redirect::to("project/list");
 	}
@@ -301,6 +304,9 @@ class ProjectController extends BaseController {
 		$project = Project::find($project_id);
 		$project->state = 3;
 		$project->save();
+
+		App::make("3enib_notification")->finishProject($project);
+
 		Session::set("headerTitle", "Projet | Liste des projets");
 		return Redirect::to("project/list");
 	}
@@ -474,6 +480,7 @@ class ProjectController extends BaseController {
 			return Redirect::to("company/$company_id")
 				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire ça"]);
 		}
+		PivotStudentProject::where("project_id", "=", $id)->delete();
 		$project->delete();
 
 		if($redirect == "list")

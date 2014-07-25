@@ -11,7 +11,7 @@
 |
 */
 Route::get('/', function(){
-	Session::set("headerTitle", "Acceuil");
+	Session::set("headerTitle", "Accueil");
 	return View::make("home");
 });
 

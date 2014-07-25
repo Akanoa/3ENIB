@@ -209,26 +209,40 @@ class _3ENIB_Notification{
 
 	}
 
-	public function studentAppliesToProject($student, $project, $recipient_id)
+	public function studentAppliesToProject($student, $project)
 	{
-		$data =[
-			"recipient_id"=>$recipient_id,
-			"text"=>"L'étudiant $student->firstname $student->lastname a postulé sur le projet $project->name",
-			"link_to"=>URL::to('project/show')."/".$project->id
-		];
+		$recipients = User::where("admin", "=", 1)->select("id")->get();
 
-		Notification::create($data);
+
+		foreach ($recipients as $recipient) 
+		{
+
+			$data =[
+				"recipient_id"=>$recipient->id,
+				"text"=>"L'étudiant $student->firstname $student->lastname a postulé sur le projet $project->name",
+				"link_to"=>URL::to('project/show')."/".$project->id
+			];
+
+			Notification::create($data);
+		}
+
 	}
 
-	public function companyCreatesAProject($project, $recipient_id)
+	public function companyCreatesAProject($project)
 	{
-		$data =[
-			"recipient_id"=>$recipient_id,
-			"text"=>"L'entreprise ".$project->company->name." a créé le projet $project->name",
-			"link_to"=>URL::to('project/list')
-		];
 
-		Notification::create($data);
+		$recipients = User::where("admin", "=", 1)->select("id")->get();
+
+		foreach ($recipients as $recipient) 
+		{
+			$data =[
+				"recipient_id"=>$recipient->id,
+				"text"=>"L'entreprise ".$project->company->name." a créé le projet $project->name",
+				"link_to"=>URL::to('project/list')
+			];
+
+			Notification::create($data);
+		}
 	}
 
 	public function adminAcceptsStudentApplication($project, $recipient_id)
@@ -259,7 +273,7 @@ class _3ENIB_Notification{
 		$data =[
 			"recipient_id"=>$project->company->user->id,
 			"text"=>"Le projet $project->name a été lancé",
-			"link_to"=>URL::to('#')
+			"link_to"=>URL::to('project/show')."/".$project->id
 		];
 
 		Notification::create($data);
@@ -269,7 +283,7 @@ class _3ENIB_Notification{
 			$data =[
 				"recipient_id"=>$student->user->id,
 				"text"=>"Le projet $project->name a été lancé",
-				"link_to"=>URL::to('#')
+				"link_to"=>URL::to('project/show')."/".$project->id
 			];
 			Notification::create($data);
 		}
@@ -281,7 +295,7 @@ class _3ENIB_Notification{
 		$data =[
 			"recipient_id"=>$project->company->user->id,
 			"text"=>"Le projet $project->name a été lancé",
-			"link_to"=>URL::to('#')
+			"link_to"=>URL::to('project/show')."/".$project->id
 		];
 
 		Notification::create($data);
@@ -291,7 +305,7 @@ class _3ENIB_Notification{
 			$data =[
 				"recipient_id"=>$student->user->id,
 				"text"=>"Le projet $project->name est terminé",
-				"link_to"=>URL::to('#')
+				"link_to"=>URL::to('project/show')."/".$project->id
 			];
 			Notification::create($data);
 		}
