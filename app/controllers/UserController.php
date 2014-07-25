@@ -740,4 +740,51 @@ class UserController extends BaseController
 			return false;
 		$notif->delete();
 	}
+
+
+	public function postElevate()
+	{
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			return Redirect::to("/")
+				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire cela"]);
+		}
+
+		$user_id = Input::get("user_id", 0);
+
+		if($user_id != 0)
+		{
+			$user = User::find($user_id);
+			$user->admin = 1;
+			$user->save();
+
+		return Redirect::to("student/list")
+			->with("notifications_infos", ["L'étudiant <b>".$user->firstname." ".$user->lastname."</b> est désormais administrateur"]);
+		}
+			return Redirect::to("/")
+				->with("notifications_errors", ["L'utilisateur n'existe pas"]);
+	}
+
+	public function postRetrograde()
+	{
+		if(!App::make("3enib_authz")->isAdmin())
+		{
+			return Redirect::to("/")
+				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire cela"]);
+		}
+
+		$user_id = Input::get("user_id", 0);
+
+		if($user_id != 0)
+		{
+			$user = User::find($user_id);
+			$user->admin = 0;
+			$user->save();
+
+		return Redirect::to("student/list")
+			->with("notifications_infos", ["L'étudiant <b>".$user->firstname." ".$user->lastname."</b> n'est est plus administrateur"]);
+		}
+			return Redirect::to("/")
+				->with("notifications_errors", ["L'utilisateur n'existe pas"]);
+	}
 }

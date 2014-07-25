@@ -5,7 +5,7 @@ class StudentController extends \BaseController {
 	function getList(){
 		if(App::make("3enib_authz")->isAdmin())
 		{		
-			$students  = Student::all();
+			$students  = Student::orderBy("firstname")->get();
 			return View::make("student.list", compact("students"));
 		}
 		else
