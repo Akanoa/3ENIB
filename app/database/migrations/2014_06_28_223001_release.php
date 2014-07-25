@@ -97,6 +97,15 @@ class Release extends Migration {
 			$table->string("remember_token")->default("");
 			$table->integer("active")->default(1);
 		});
+
+
+		Schema::create("notifications", function($table){
+			$table->increments('id');
+			$table->integer('recipient_id');
+			$table->string('text');
+			$table->string('link_to');
+			$table->timestamps();
+		});
 	}
 
 	/**
@@ -114,6 +123,7 @@ class Release extends Migration {
 		Schema::drop("project_student_pivot");
 		Schema::drop("students");
 		Schema::drop("users");
+		Schema::drop("notifications");
 
 	}
 

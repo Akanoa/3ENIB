@@ -706,4 +706,12 @@ class UserController extends BaseController
 		return Redirect::to($location)
 			->with("notifications_infos", ["L'$own <b>$name</b> est banni$final"]);
 	}
+
+	public function getDestroyNotification($notif_id)
+	{
+		$notif = Notification::find($notif_id); 
+		if(Auth::user()->id != $notif->recipient_id)
+			return false;
+		$notif->delete();
+	}
 }

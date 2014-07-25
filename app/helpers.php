@@ -203,6 +203,112 @@ class _3ENIB_Text
 	}
 }
 
+class _3ENIB_Notification{
+
+	public function __construct (){
+
+	}
+
+	public function studentAppliesToProject($student, $project, $recipient_id)
+	{
+		$data =[
+			"recipient_id"=>$recipient_id,
+			"text"=>"L'étudiant $student->firstname $student->lastname a postulé sur le projet $project->name",
+			"link_to"=>URL::to('project/show')."/".$project->id
+		];
+
+		Notification::create($data);
+	}
+
+	public function companyCreatesAProject($project, $recipient_id)
+	{
+		$data =[
+			"recipient_id"=>$recipient_id,
+			"text"=>"L'entreprise ".$project->company->name." a créé le projet $project->name",
+			"link_to"=>URL::to('project/list')
+		];
+
+		Notification::create($data);
+	}
+
+	public function adminAcceptsStudentApplication($project, $recipient_id)
+	{
+		$data =[
+			"recipient_id"=>$recipient_id,
+			"text"=>"Votre candidature a été accepté sur le projet $project->name",
+			"link_to"=>URL::to('#')
+		];
+
+		Notification::create($data);
+	}
+
+	public function adminAcceptsCompanyProject($project)
+	{
+		$data =[
+			"recipient_id"=>$project->company->user->id,
+			"text"=>"Le projet $project->name a été accepté",
+			"link_to"=>URL::to('#')
+		];
+
+		Notification::create($data);
+	}
+
+	public function launchProject($project)
+	{
+		//notification to company owner
+		$data =[
+			"recipient_id"=>$project->company->user->id,
+			"text"=>"Le projet $project->name a été lancé",
+			"link_to"=>URL::to('#')
+		];
+
+		Notification::create($data);
+
+		foreach($project->students()->where("student_state", "=", 1)->get() as $student)
+		{
+			$data =[
+				"recipient_id"=>$student->user->id,
+				"text"=>"Le projet $project->name a été lancé",
+				"link_to"=>URL::to('#')
+			];
+			Notification::create($data);
+		}
+	}
+
+	public function finishProject($project)
+	{
+		//notification to company owner
+		$data =[
+			"recipient_id"=>$project->company->user->id,
+			"text"=>"Le projet $project->name a été lancé",
+			"link_to"=>URL::to('#')
+		];
+
+		Notification::create($data);
+
+		foreach($project->students()->where("student_state", "=", 1)->get() as $student)
+		{
+			$data =[
+				"recipient_id"=>$student->user->id,
+				"text"=>"Le projet $project->name est terminé",
+				"link_to"=>URL::to('#')
+			];
+			Notification::create($data);
+		}
+	}
+
+	public function getNotification()
+	{
+		$notifications = [];
+		if(Auth::check())
+		{
+			$notifications = Notification::where("recipient_id", "=", Auth::user()->id)->get();
+		}
+
+		return [count($notifications), $notifications];
+	}
+}
+
 //--------------------------------
 //           Bind
 //--------------------------------
@@ -221,4 +327,8 @@ App::bind("3enib_text", function($app){
 
 App::bind("3enib_user", function($app){
 	return new _3ENIB_User;
+});
+
+App::bind("3enib_notification", function($app){
+	return new _3ENIB_Notification;
 });

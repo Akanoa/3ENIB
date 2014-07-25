@@ -26,6 +26,8 @@
 
     <body role="document">
 
+    <span id="root_site" value="{{$_ENV['root_site']}}"></span>
+
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -39,6 +41,29 @@
                     @endif
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    @if(Auth::check())
+                        {{-- */list($nb, $notifications) = App::make("3enib_notification")->getNotification();/* --}}
+                        <li id="notifications">
+                            @if($nb>0)
+                                <div id="num-notification">{{$nb}}</div>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bell notif" id="icon-bell"></span></a>
+                                <ul class="dropdown-menu notification-list notif">
+                            @else
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bell no-notif" id="icon-bell"></span></a>
+                                <ul class="dropdown-menu notification-list no-notif">
+                            @endif
+
+                                @if($nb==0)
+                                    pas de notification
+                                @else
+                                    @foreach ($notifications as $notification) 
+                                        <li><a href="#" onclick="removeNotification(this)" notif-id="{{$notification->id}}" class="notification" link-to="{{$notification->link_to}}">{{$notification->text}}</a></li>
+                                        <li class="divider"></li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                     @if(!Auth::guest())
                         <li>
                             <img class="navbar-brand" src="{{$_ENV['root_site']}}/document/avatar/{{Auth::user()->id}}/{{Auth::user()->own->avatar_filepath}}" alt="">

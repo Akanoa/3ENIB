@@ -84,9 +84,12 @@ class ProjectController extends BaseController {
 				"company_id"=>$company_id
 			];
 
-			Project::create($datas);
+
+			$project_id = DB::table('projects')->insertGetId($datas);
 
 			$infos = ["Votre projet a été soumis à la modération, il sera visible pour le reste des étudiants dès que le projet sera validé."];
+
+			App::make("3enib_notification")->companyCreatesAProject(Project::find($project_id), 1);
 
 			Session::set("headerTitle", "Edition");
 			return Redirect::to("company/".$company_id)
@@ -219,6 +222,7 @@ class ProjectController extends BaseController {
 
 		$project->students()->attach($student_id);
 
+		App::make("3enib_notification")->studentAppliesToProject(Student::find($student_id), $project, 1);
 
 		Session::set("headerTitle", "Projet | ".Project::find($project_id)->name);
 		return Redirect::to("project/show/".$project_id);
@@ -257,6 +261,9 @@ class ProjectController extends BaseController {
 		$project = Project::find($project_id);
 		$project->state = 1;
 		$project->save();
+
+		App::make("3enib_notification")->adminAcceptsCompanyProject($project);
+
 		Session::set("headerTitle", "Projet | Liste des projets");
 		return Redirect::to("project/list");
 	}
@@ -356,6 +363,10 @@ class ProjectController extends BaseController {
 		$student = Student::find($student_id);
 
 		PivotStudentProject::where("project_id", "=", $project_id)->where("student_id", "=", $student_id)->update(["student_state"=> 1]);
+
+
+		App::make("3enib_notification")->adminAcceptsStudentApplication($project, $student->user->id);
+
 		Session::set("headerTitle", "Projet | Liste des projets");
 		return Redirect::to("project/show/".$project->id)
 				->with("notifications_success", ["L'étudiant <b>".$student->firstname." ".$student->lastname." </b> est maintenant inclus dans le projet ".$project->name]);
@@ -369,12 +380,12 @@ class ProjectController extends BaseController {
 			if ($project_id == 0)
 			{
 				return  Redirect::to("/")
-					->with("notifications_errors", "Le projet n'existe pas");
+					->with("notifications_errors", ["Le projet n'existe pas"]);
 			}
 			else
 			{
 				return Redirect::to("project/show/$project_id")
-					->with("notifications_errors", "Vous n'êtes pas autorisé à faire ça");
+					->with("notifications_errors", ["Vous n'êtes pas autorisé à faire ça"]);
 			}
 
 		}
@@ -453,27 +464,29 @@ class ProjectController extends BaseController {
 
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
+	public function getDelete($id, $redirect="list")
 	{
-		//
-	}
+		$project = Project::findOrFail($id);
+		$name = $project->name;
+		$company_id = $project->company->id;
+		if(Auth::user()->admin == 0 and Auth::user()->$project->company->user->id)
+		{
+			return Redirect::to("company/$company_id")
+				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire ça"]);
+		}
+		$project->delete();
 
+		if($redirect == "list")
+		{
+			return Redirect::to("project/list")
+				->with("notifications_success", ["Le projet <b>$name</b> a été supprimé"]);
+		}
+		else if($redirect == "company")
+		{
+			return Redirect::to("company/$company_id")
+				->with("notifications_success", ["Le projet <b>$name</b> a été supprimé"]);
+		}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 

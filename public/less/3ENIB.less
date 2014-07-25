@@ -10,7 +10,9 @@ abbr[title]
 .navbar-brand
 {
 	padding: 2px;
-	border-radius: 10px;
+	height: 48px;
+	width: 42px;
+	padding-top: 6px;
 }
 
 .logo-company
@@ -74,6 +76,63 @@ abbr[title]
 	color: black;
 }
 
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+background-color: #1F1D1D;
+color: #fff;
+}
+
+
+#notifications
+{
+	margin-right: 30px;
+	border-radius: 10px;
+
+	#num-notification
+	{
+		color: #fff;
+		background-color: red;
+		display: inline-block;
+		min-width: 50%;
+		position: relative;
+		font-size: 0.7em;
+		text-align: center;
+		right: -12px;
+		top: 23px;
+		border-radius: 10px;
+		z-index: 10;
+		padding: 1px;
+	}
+
+	#icon-bell.notif
+	{
+		font-size: 1.2em;
+		position: absolute;
+		top:0px;
+		right: 11px;
+	}
+
+	#icon-bell.no-notif
+	{
+		font-size: 1.2em;
+		position: absolute;
+		top:19px;
+		right: 11px;
+	}
+
+	.notification-list.no-notif
+	{
+		padding: 5px;
+		min-width: 500px;
+		margin-top: 20px;
+	}
+
+	.notification-list.notif
+	{
+		padding: 5px;
+		min-width: 500px;
+	}
+}
+
 .post
 {
 	margin-top: 10px;
@@ -81,8 +140,10 @@ abbr[title]
 
 	.post-avatar
 	{
-		height: 50px;
-		border-radius: 10px;
+		padding: 2px;
+		height: 48px;
+		width: 42px;
+		padding-top: 6px;
 	}
 
 	.post-message

@@ -90,7 +90,7 @@
 									<a href="{{URL::to('project/edit')}}/{{$p->id}}"><button class="btn btn-info">Modifier</button></a>
 								</div>
 								<div class="col-md-1">
-									<a href="#"><button class="btn btn-danger">Supprimer le projet</button></a>
+									<a href="{{URL::to('project/delete')}}/{{$p->id}}/company" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce projet?');"><button class="btn btn-danger">Supprimer le projet</button></a>
 								</div>
 							@endif
 						</div>

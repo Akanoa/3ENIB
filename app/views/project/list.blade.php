@@ -23,45 +23,55 @@
 					<td class="row">
 					@if (App::make("3enib_authz")->isAdmin())
 						@if ($project->state == 0)
-							<div class="col-md-4">
+							<div class="col-md-3">
 								{{Form::open(["method"=>"POST", "url"=>"project/validate"])}}
 									{{Form::hidden("project_id", $project->id)}}
 									{{ Form::submit('Valider le projet', array('class' => 'btn btn-success')) }}
 								{{Form::close()}}
 							</div>
 						@elseif ($project->state == 1)
-							<div class="col-md-4">
+							<div class="col-md-3">
 								{{Form::open(["method"=>"POST", "url"=>"project/activate"])}}
 									{{Form::hidden("project_id", $project->id)}}
 									{{ Form::submit('Lancer le projet', array('class' => 'btn btn-success')) }}
 								{{Form::close()}}
 							</div>
 						@elseif ($project->state == 2)
-							<div class="col-md-4">
+							<div class="col-md-3">
 								{{Form::open(["method"=>"POST", "url"=>"project/archive"])}}
 									{{Form::hidden("project_id", $project->id)}}
 									{{ Form::submit('Archiver le projet', array('class' => 'btn btn-warning')) }}
 								{{Form::close()}}
 							</div>
 						@elseif ($project->state == 3)
-							<div class="col-md-4">
+							<div class="col-md-3">
 								{{Form::open(["method"=>"POST", "url"=>"project/activate"])}}
 									{{Form::hidden("project_id", $project->id)}}
 									{{ Form::submit('Relancer le projet', array('class' => 'btn btn-success')) }}
 								{{Form::close()}}
 							</div>
+						@elseif ($project->state == 4)
+							<div class="col-md-3">
+								{{Form::open(["method"=>"POST", "url"=>"project/validate"])}}
+									{{Form::hidden("project_id", $project->id)}}
+									{{ Form::submit('Restaurer le projet', array('class' => 'btn btn-success')) }}
+								{{Form::close()}}
+							</div>
 						@endif
 						@if ($project->state == 0 or $project->state == 1 or $project->state == 2)
-							<div class="col-md-4">
+							<div class="col-md-3">
 								{{Form::open(["method"=>"POST", "url"=>"project/close"])}}
 									{{Form::hidden("project_id", $project->id)}}
 									{{ Form::submit('Clore le projet', array('class' => 'btn btn-danger')) }}
 								{{Form::close()}}
 							</div>
 						@endif
+						<div class="col-md-3">
+							<a href="{{URL::to('project/delete')}}/{{$project->id}}/list" onclick="return confirm('Êtes vous sûr de vouloir supprimer ce projet?');"><button class="btn btn-danger">Supprimer le projet</button></a>
+						</div>
 					@endif
 					@if (App::make("3enib_authz")->studentAllowedToSubscribeToProject($project)) 
-						<div class="col-md-4">
+						<div class="col-md-3">
 							{{Form::open(["url"=>"/project/signup/","method"=>"post"])}}
 								{{Form::hidden("project_id", $project->id)}}
 								{{Form::hidden("student_id", Auth::user()->own->id)}}

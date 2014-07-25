@@ -19,6 +19,27 @@ function removeDocument (element){
 	}
 }
 
+function removeNotification(element){
+	url = $("#root_site")[0].getAttribute("value")+"/user/destroy-notification/"+element.getAttribute("notif-id");
+
+
+	$.ajax({
+	  type: "GET",
+	  url: url,
+	  data: {},
+	  success: function(){
+	  		window.location.href = element.getAttribute("link-to");
+	  		if(element.getAttribute("link-to")=="#"){
+	  			location.reload(true);
+	  		}
+	  },
+	  dataType: "html"
+	});
+
+	return false;
+}
+
+
 (function ( $ ) {
 	$("#signup-company").fadeOut();
 	$("#student-subscription").change(function(){
