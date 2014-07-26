@@ -276,6 +276,7 @@ class UserController extends BaseController
 
 			$validation = Validator::make(Input::all(), $rules);
 
+
 			if($validation->fails()){
 				Session::set("headerTitle", "Se connecter");
 				return Redirect::to("user/signin")
@@ -787,4 +788,84 @@ class UserController extends BaseController
 			return Redirect::to("/")
 				->with("notifications_errors", ["L'utilisateur n'existe pas"]);
 	}
+
+
+	public function getReset($email="", $hash="")
+	{
+
+		if($hash == "")
+		{
+			$user = User::where("email", "=", $email)->get();
+
+			if(count($user)==0)
+			{
+				return Redirect::to("user/signin")
+					->with("notifications_errors", ["Ce compte n'existe pas"]);
+			}
+
+			$user = $user[0];		
+
+			$data = [
+					"token"=>$user->remember_token,
+					"email"=>$email
+					];
+
+
+			Mail::send("emails.account.reset", $data, function($message) use($email){
+					$message->from("subscription@3enib.fr");
+					$message->to($email)->subject("Remise à zéro mot de passe 3ENIB");
+				});
+			
+			return Redirect::to("user/signin")
+				->with("notifications_success", ["Un email vous a été envoyé"]);
+		}
+		else
+		{
+			$email = preg_replace("/%40/", "@", $email);
+
+			$users = User::where("remember_token", "=", $hash)->where("email", "=", $email)->get();
+
+
+			if(count($users)==1)
+			{
+				$user = $users[0];
+
+				Session::set("headerTitle", "Changer de mot de passe");
+				return View::make("user.reset", compact("user"));
+			}
+			else
+			{
+			return Redirect::to("user/signin")
+				->with("notifications_errors", ["Une erreur est survenue"]);
+			}
+		}
+	}
+
+	public function postReset()
+	{
+		$rules = array(
+				"password"=>"required|min:5|confirmed",
+				"password_confirmation"=>"required"
+			);
+
+		$validation = Validator::make(Input::all(), $rules);
+
+		$hash  = Input::get("hash");
+		$email = Input::get("email"); 
+		$user = User::where("remember_token", "=", $hash)->where("email", "=", $email)->get()[0];
+
+		if($validation->fails()){
+
+			Session::set("headerTitle", "Changer de mot de passe");
+			return View::make("user.reset", compact("user"))
+			->withErrors($validation);
+		}
+
+		$user->password= Hash::make(Input::get("password"));
+		$user->save();
+
+		return Redirect::to("user/signin")
+			->with("notifications_success", ["Votre mot de passe a été modifié"]);
+	}
+
 }

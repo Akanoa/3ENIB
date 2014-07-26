@@ -66,7 +66,7 @@ function removeNotification(element){
 	});
 
 	$(".remove-document").click(function(event) {
-		if (confirm('Voulez vous supprimer ce message?')) {
+		if (confirm('Voulez vous supprimer ce document?')) {
 			var val = $(this).parent()[0].href;
 			window.location.replace(val);
 		} 
@@ -109,6 +109,10 @@ function removeNotification(element){
 		{
 			inputs[input].name = "private["+document_added+"]";
 		}
+	});
+
+	$("#signin-email").change(function(event){
+		$("#forgot-passwd").attr("href", $("#root-to-forgot-passwd").val()+"/"+$("#signin-email").val());
 	});
 
 }( jQuery ));
