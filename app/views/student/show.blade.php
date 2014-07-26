@@ -32,7 +32,7 @@
 				<span class="glyphicon glyphicon-lock"></span>
 			</div>
 			<div class="col-md-11">
-				<p><b>IBAN</b>: {{{$student->RIB}}}</p>
+				<p><b>N° de sécurité sociale</b>: {{{$student->secu}}}</p>
 			</div>
 
 			<div class="col-md-1">

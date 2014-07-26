@@ -36,8 +36,8 @@ class UserTableSeeder extends Seeder {
         Student::create([
         					"firstname"=>"Admin",
         					"user_id"=>1,
-        					"phone_number"=>"$nbsp;",
-        					"RIB"=>"$nbsp;"
+        					"phone_number"=>"&nbsp;",
+        					"RIB"=>"&nbsp;"
         				]);
     }
 

@@ -52,7 +52,8 @@ class UserController extends BaseController
 					"photo"=>"image|mimes:jpeg,png,tga",
 					"cv"=>"mimes:pdf",
 					"password"=>"required|min:5|confirmed",
-					"password_confirmation"=>"required"
+					"password_confirmation"=>"required",
+					"secu"=>"required"
 				);
 
 			$validation = Validator::make(Input::all(), $rules);
@@ -79,6 +80,7 @@ class UserController extends BaseController
 				$data_student = array(
 						"lastname"=>Input::get("lastname", ""),
 						"firstname"=>Input::get("firstname", ""),
+						"secu"=>Input::get("secu", ""),
 						"phone_number"=>Input::get("phone_number")!=""?:"&nbsp;",
 						"description"=>Input::get("description", ""),
 						"speciality"=>$speciality
@@ -480,6 +482,7 @@ class UserController extends BaseController
 					"photo"=>"image|mimes:jpeg,png,tga",
 					"cv"=>"mimes:pdf",
 					"password"=>"min:5|confirmed",
+					"secu"=>"required"
 				);
 
 			$validation = Validator::make(Input::all(), $rules);
@@ -508,6 +511,7 @@ class UserController extends BaseController
 						"firstname"=>Input::get("firstname"),
 						"phone_number"=>Input::get("phone_number"),
 						"description"=>Input::get("description"),
+						"secu"=>Input::get("secu")
 					);
 
 				if($speciality != "")

@@ -80,7 +80,7 @@ class Release extends Migration {
 			$table->string("avatar_filepath")->default("");
 			$table->string("cv_filepath")->default("");
 			$table->text("description");
-			$table->string("RIB")->default("&nbsp;");
+			$table->string("secu")->default("&nbsp;");
 			$table->integer("user_id")->default(0);
 			$table->timestamps();
 		});
