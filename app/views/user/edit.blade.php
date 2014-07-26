@@ -116,7 +116,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="lastname">N° de sécurité sociale</label>  
         <div class="col-md-4">
-        {{Form::text("secu", "", array("placeholder"=>"numéro", "class"=>"form-control input-md"))}}
+        {{Form::text("secu", App::make("3enib_text")->filterText($datas["secu"]), array("placeholder"=>"numéro", "class"=>"form-control input-md"))}}
         </div>
           {{$errors->first("secu", '<span class="help-block">:message</span>')}}
       </div>

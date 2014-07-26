@@ -416,7 +416,8 @@ class UserController extends BaseController
 					"firstname" => $user->own->firstname,
 					"email" => $user->email,
 					"phone_number" => $user->own->phone_number,
-					"description" => $user->own->description
+					"description" => $user->own->description,
+					"secu" => $user->own->secu
 				];
 
 				return View::make("user.edit", compact("user", "studentSpecialities", "datas"));
