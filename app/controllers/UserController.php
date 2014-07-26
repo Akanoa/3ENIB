@@ -529,7 +529,7 @@ class UserController extends BaseController
 
 				if(Input::get("password"))
 				{
-					$data_user["password"] = Input::get("password");
+					$data_user["password"] = Hash::make(Input::get("password"));
 				}
 
 				User::where("id",'=',$user_id)->update($data_user);
@@ -608,7 +608,7 @@ class UserController extends BaseController
 					);
 				if(Input::get("password"))
 				{
-					$data_user["password"] = Input::get("password");
+					$data_user["password"] = Hash::make(Input::get("password"));
 				}
 
 				User::where("id",'=',$user_id)->update($data_user);

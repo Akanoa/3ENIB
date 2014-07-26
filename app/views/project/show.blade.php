@@ -29,7 +29,15 @@
 
 	<div class="col-md-12">
 		<h3>Rémunération?</h2>
+		@if(!App::make("3enib_authz")->isAdmin())
 		<p><span class="glyphicon glyphicon-usd">&nbsp;</span>{{{$project->remuneration}}}€</p>
+		@else
+		{{Form::open(["method"=>"GET", "url"=>"project/remuneration/".$project->id])}}
+		<p><span class="glyphicon glyphicon-usd">&nbsp;</span>{{Form::text("remuneration", $project->remuneration)}}€
+		{{ Form::submit('OK', array('class' => 'btn btn-success')) }}</p>
+		{{Form::close()}}
+		@endif
+
 	</div>
 
 	<div class="col-md-12">

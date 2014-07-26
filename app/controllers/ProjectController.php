@@ -470,12 +470,34 @@ class ProjectController extends BaseController {
 
 	}
 
+	public function getRemuneration($id)
+	{
+		$project = Project::findOrFail($id);
+		$name = $project->name;
+		$company_id = $project->company->id;
+		if(Auth::user()->admin == 0 )
+		{
+			return Redirect::to("company/$company_id")
+				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire ça"]);
+		}
+
+		$datas = ["remuneration" => Input::get("remuneration")];
+
+		$project->update($datas);
+
+		return Redirect::to("project/show/$id")
+			->with("notifications_success", ["La rémunération du projet <b>$name</b> a été modifié"]);
+		
+
+	}
+
 	public function getDelete($id, $redirect="list")
 	{
 		$project = Project::findOrFail($id);
 		$name = $project->name;
 		$company_id = $project->company->id;
-		if(Auth::user()->admin == 0 and Auth::user()->$project->company->user->id)
+
+		if(Auth::user()->admin == 0 and App::make("3enib_authz")->isCompany() and Auth::user()->own()->id =!$company_id)
 		{
 			return Redirect::to("company/$company_id")
 				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire ça"]);
