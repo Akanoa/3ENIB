@@ -117,13 +117,13 @@ class CompanyController extends \BaseController {
 
 			//delete related files
 			foreach (Document::where("project_id", "=", $project->id) as $document) {
-				unset(storage_path()."/uploads/".$user->id."/pdf/".$document->path);
+				unlink(storage_path()."/uploads/".$user->id."/pdf/".$document->path);
 			}
 		}
 		$company->projects()->delete();
 		$user->delete();
-		unset(storage_path()."/uploads/".$user->id."/avatar/".$company->avatar_filepath);
-		unset(storage_path()."/uploads/".$user->id."/logo/".$company->photo_filepath);
+		unlink(storage_path()."/uploads/".$user->id."/avatar/".$company->avatar_filepath);
+		unlink(storage_path()."/uploads/".$user->id."/logo/".$company->photo_filepath);
 		$company->delete();
 
 

@@ -41,12 +41,13 @@ class StudentController extends \BaseController {
 			return Redirect::to("/")
 				->with("notifications_errors", ["Vous n'êtes pas autorisé à faire ça"]);
 		}
+		
 		PivotStudentProject::where("student_id", "=", $id)->delete();
 		Post::where("user_id", "=", $user->id)->delete();
 		$user->delete();
-		unset(storage_path()."/uploads/".$user->id."/avatar/".$student->avatar_filepath);
-		unset(storage_path()."/uploads/".$user->id."/logo/".$student->photo_filepath);
-		unset(storage_path()."/uploads/".$user->id."/pdf/".$student->cv_filepath);
+		unlink(storage_path()."/uploads/".$user->id."/avatar/".$student->avatar_filepath);
+		unlink(storage_path()."/uploads/".$user->id."/logo/".$student->photo_filepath);
+		unlink(storage_path()."/uploads/".$user->id."/pdf/".$student->cv_filepath);
 		$student->delete();
 
 
